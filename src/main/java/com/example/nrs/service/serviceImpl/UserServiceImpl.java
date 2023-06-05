@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Department should be selected");
         }
         user.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));
-        user.setRole(Role.STUDENT);
+        user.setRole(Role.USER);
         userRepo.save(user);
         return new UserDto(user);
     }

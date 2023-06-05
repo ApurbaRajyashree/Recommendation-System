@@ -1,184 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="font-size: 16px;" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registration </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="css/register.css" media="screen">
+    <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
 </head>
-<body>
-<br/><br/><br/>
-<div class="container">
-  <div class="row col-md-8 offset-md-2">
-    <div class="card">
-      <div class="card-header">
-        <h2 class="text-center">Registration</h2>
-      </div>
-      <div th:if="${param.success}">
-        <div class="alert alert-info">
-          You have successfully registered our app!
+<body class="u-body u-xl-mode" data-lang="en">
+<section class="u-align-center u-clearfix u-grey-5 u-section-1" id="sec-ef6c">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-align-center u-container-align-center u-container-style u-expanded-width-xs u-group u-shape-rectangle u-group-1">
+            <div class="u-container-layout">
+                <h3 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">New User
+                    Registration</h3>
+                <div class="u-expanded-width u-form u-login-control u-white u-form-1">
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info">
+                            You have successfully registered our app!
+                        </div>
+                    </div>
+                    <div th:if="${param.fail}">
+                        <div class="alert alert-danger" >
+                            <span th:text="${error}"></span>
+                        </div>
+                    </div>
+                    <form name="registration"
+                          method="post"
+                          role="form"
+                          onsubmit="return validateform()"
+                          th:action="@{/register/save}"
+                          th:object="${user}"
+                          class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form"
+                          style="padding: 30px;">
+                        <div class="u-form-group u-form-group-1">
+                            <label for="text-24c7" class="u-label">Full Name *</label>
+                            <input type="text"
+                                   placeholder="Enter your Full Name"
+                                   id="text-24c7"
+                                   name="text"
+                                   th:field="*{userFullName}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-1"
+                                   required/>
+                            <p th:errors="*{userFullName}" class="text-danger"
+                               th:if="${#fields.hasErrors('userFullName')}"></p>
+                        </div>
+                        <div class="u-form-group u-form-group-2">
+                            <label for="text-eddc" class="u-label">Mobile Number *</label>
+                            <input type="text"
+                                   placeholder="Enter your Mobile Number"
+                                   id="text-eddc"
+                                   name="text-1"
+                                   pattern="[9]{1}[0-9]{9}"
+                                   th:field="*{userMobileNumber}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-2"
+                            required/>
+                            <p th:errors="*{userMobileNumber}" class="text-danger"
+                               th:if="${#fields.hasErrors('userMobileNumber')}"></p>
+                        </div>
+                        <div class="u-form-group u-form-group-3">
+                            <label for="text-631c" class="u-label">College Name *</label>
+                            <input type="text"
+                                   placeholder="Enter your College Name"
+                                   id="text-631c"
+                                   name="text-2"
+                                   th:field="*{collegeName}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-3"
+                            required/>
+                            <p th:errors="*{collegeName}" class="text-danger"
+                               th:if="${#fields.hasErrors('collegeName')}"></p>
+
+                        </div>
+                        <div class="u-form-group u-form-group-4">
+                            <label for="text-a68b" class="u-label">College Address *</label>
+                            <input type="text"
+                                   placeholder="Enter your College address"
+                                   id="text-a68b" name="text-3"
+                                   th:field="*{collegeAddress}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-4"
+                            required/>
+                            <p th:errors="*{collegeAddress}" class="text-danger"
+                               th:if="${#fields.hasErrors('collegeAddress')}"></p>
+
+                        </div>
+                        <div class="u-form-group u-form-select u-form-group-5">
+                            <label for="select-de10" class="u-label">Department *</label>
+                            <div class="u-form-select-wrapper">
+                                <select id="select-de10" name="select"
+                                        class="u-grey-5 u-input u-input-rectangle u-input-5"
+                                        th:field="*{department}"
+                                        required>
+                                    <option value="0">select option</option>
+                                    <option
+                                            th:each="department : ${departments}"
+                                            th:value="${department.id}"
+                                            th:text="${department.departmentName}"></option>
+                                </select>
+                                <p th:errors="*{department}" class="text-danger"
+                                   th:if="${#fields.hasErrors('department')}"></p>
+
+                            </div>
+                        </div>
+                        <div class="u-form-group u-form-name">
+                            <label for="username-a30d" class="u-label">Email *</label>
+                            <input type="text"
+                                   placeholder="Enter your email address"
+                                   id="username-a30d"
+                                   name="username"
+                                   th:field="*{userEmail}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-6" required="">
+                            <p th:errors="*{userEmail}" class="text-danger"
+                               th:if="${#fields.hasErrors('userEmail')}"></p>
+
+                        </div>
+                        <div class="u-form-group u-form-password">
+                            <label for="password-a30d" class="u-label">Password *</label>
+                            <input type="password"
+                                   placeholder="Enter your Password"
+                                   id="password-a30d" name="password"
+                                   th:field="*{userPassword}"
+                                   class="u-grey-5 u-input u-input-rectangle u-input-7" required="">
+                            <p th:errors="*{userPassword}" class="text-danger"
+                               th:if="${#fields.hasErrors('userPassword')}"></p>
+
+                        </div>
+                        <div class="u-align-right u-form-group u-form-submit">
+                            <button class="u-button-style u-palette-3-base u-btn-1 btn btn-primary" type="submit">
+                                Sign up
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <a th:href="@{/login}"
+                   class="u-align-center u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-forgot-password u-none u-text-grey-40 u-text-hover-palette-4-base u-btn-2">Already
+                    have an account?</a>
+            </div>
         </div>
-      </div>
-      <div th:if="${param.fail}">
-        <div class="alert alert-danger" >
-          <span th:text="${error}"></span>
-        </div>
-      </div>
-      <div class="card-body">
-        <form
-                name="registration"
-                method="post"
-                role="form"
-                onsubmit="return validateform()"
-                th:action="@{/register/save}"
-                th:object="${user}"
-        >
-          <div class="form-group mb-3">
-            <label class="form-label">Full Name</label>
-            <input
-                    class="form-control"
-                    id="inputFullName"
-                    name="firstName"
-                    placeholder="Enter full name"
-                    th:field="*{userFullName}"
-                    type="text"
-                    required
-            />
-            <p th:errors="*{userFullName}" class="text-danger"
-               th:if="${#fields.hasErrors('userFullName')}"></p>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="form-label">Mobile Number</label>
-            <input
-                    class="form-control"
-                    id="inputMobileNumber"
-                    name="mobileNumber"
-                    placeholder="Enter Mobile Number"
-                    pattern="[9]{1}[0-9]{9}"
-                    th:field="*{userMobileNumber}"
-                    type="text"
-                    required
-            />
-            <p th:errors="*{userMobileNumber}" class="text-danger"
-               th:if="${#fields.hasErrors('userMobileNumber')}"></p>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="form-label">College Name</label>
-            <input
-                    class="form-control"
-                    id="inputCollegeName"
-                    name="mobileNumber"
-                    placeholder="Enter Designation"
-                    th:field="*{collegeName}"
-                    type="text"
-                    required
-            />
-            <p th:errors="*{collegeName}" class="text-danger"
-               th:if="${#fields.hasErrors('collegeName')}"></p>
-          </div>
-          <div class="form-group mb-3">
-            <label class="form-label">College Address</label>
-            <input
-                    class="form-control"
-                    id="inputCollegeAddress"
-                    name="mobileNumber"
-                    placeholder="Enter Designation"
-                    th:field="*{collegeAddress}"
-                    type="text"
-                    required
-            />
-            <p th:errors="*{collegeAddress}" class="text-danger"
-               th:if="${#fields.hasErrors('collegeAddress')}"></p>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="form-label">Email</label>
-            <input
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter email address"
-                    th:field="*{userEmail}"
-                    type="email"
-                    required
-            />
-            <p th:errors="*{userEmail}" class="text-danger"
-               th:if="${#fields.hasErrors('userEmail')}"></p>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="form-label">Department</label>
-            <select
-                    id="inputDepartment"
-                    class="form-select" ,
-                    th:field="*{department}"
-                    required>
-              <option value="0">select option</option>
-              <option
-                      th:each="department : ${departments}"
-                      th:value="${department.id}"
-                      th:text="${department.departmentName}"></option>
-            </select>
-            <p th:errors="*{department}" class="text-danger"
-               th:if="${#fields.hasErrors('department')}"></p>
-
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="form-label">Password</label>
-            <input
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    placeholder="Enter password"
-                    th:field="*{userPassword}"
-                    type="password"
-                    required
-            />
-            <p th:errors="*{userPassword}" class="text-danger"
-               th:if="${#fields.hasErrors('userPassword')}"></p>
-          </div>
-
-
-          <div class="form-group">
-            <button class="btn btn-primary" type="submit">Register</button>
-            <span>Already registered? <a th:href="@{/login}">Login here</a></span>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
-</div>
+</section>
 
 <script>
+    function validateform() {
+        var num = document.registration.mobileNumber.value;
+        var phoneno = /^\d{10}$/;
+        if (num.value.match(phoneno)) {
+            return true;
+        } else {
+            alert("Please enter valid Mobile Number");
+            return false;
+        }
 
-  function validateform(){
-    var num=document.registration.mobileNumber.value;
-    var phoneno = /^\d{10}$/;
-    if(num.value.match(phoneno))
-    {
-      return true;
+        var x = document.registration.email.value;
+        var atposition = x.indexOf("@");
+        var dotposition = x.lastIndexOf(".");
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= x.length) {
+            alert("Please enter a valid e-mail address");
+            return false;
+        } else {
+            return true;
+        }
     }
-    else
-    {
-      alert("Please enter valid Mobile Number");
-      return false;
-    }
-
-    var x=document.registration.email.value;
-    var atposition=x.indexOf("@");
-    var dotposition=x.lastIndexOf(".");
-    if (atposition<1 || dotposition<atposition+2 || dotposition+2>=x.length){
-      alert("Please enter a valid e-mail address");
-      return false;
-    } else{
-      return true;
-    }
-  }
 </script>
+
 </body>
 </html>
