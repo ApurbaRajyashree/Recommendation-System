@@ -19,8 +19,6 @@ public class DepartmentDto {
 
     private String departmentName;
 
-    private String departmentDescription;
-
     private boolean isActive = true;
 
     private List<User> users;
@@ -30,7 +28,6 @@ public class DepartmentDto {
     public DepartmentDto(Department department){
         this.id=department.getId();
         this.departmentName=department.getDepartmentName();
-        this.departmentDescription=department.getDepartmentDescription();
         this.isActive=department.isActive();
     }
 }

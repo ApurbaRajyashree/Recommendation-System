@@ -8,4 +8,8 @@ public interface DepartmentService {
     DepartmentDto createDepartment(DepartmentDto departmentDto);
 
     List<DepartmentDto> getAllDepartment();
+    DepartmentDto getDepartmentByName(String name);
+
+    String deleteDepartment(int id);
+
 }

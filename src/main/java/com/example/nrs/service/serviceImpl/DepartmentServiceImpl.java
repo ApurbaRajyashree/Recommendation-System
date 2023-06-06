@@ -37,4 +37,20 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<Department> departments = departmentRepo.findAll();
         return departments.stream().map(DepartmentDto::new).collect(Collectors.toList());
     }
+
+
+    @Override
+    public DepartmentDto getDepartmentByName(String name) {
+        Department department = departmentRepo.findByDepartmentName(name);
+        if (department != null) {
+            return new DepartmentDto(department);
+        } else
+            throw new RuntimeException("Department does not exist");
+    }
+
+    @Override
+    public String deleteDepartment(int id) {
+        departmentRepo.deleteById(id);
+        return "Successfully deleted";
+    }
 }

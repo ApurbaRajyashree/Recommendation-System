@@ -31,9 +31,6 @@ public class Department {
     @Column(name = "name", nullable = false, length = 20)
     private String departmentName;
 
-    @Column(name = "description",nullable = false)
-    private String departmentDescription;
-
     @Column(name = "is_active")
     private boolean isActive = true;
 
@@ -48,7 +45,6 @@ public class Department {
     public Department(DepartmentDto departmentDto){
         this.id=departmentDto.getId();
         this.departmentName=departmentDto.getDepartmentName();
-        this.departmentDescription=departmentDto.getDepartmentDescription();
         this.isActive=departmentDto.isActive();
     }
 }

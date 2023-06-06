@@ -1,0 +1,79 @@
+
+body {
+    background-color: #F5F5F5;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.sidebar {
+    min-height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    background-image: url(../../images/sidebar_bg.png);
+    background-position: center;
+    background-size: cover;
+
+}
+
+.list-group-item {
+
+    background-color: #ffffff;
+    border: 0;
+    padding: 0;
+    color: #000000;
+    padding: 10px;
+    border-radius: 0px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+ul {
+    margin-block-start: 0em;
+}
+
+.list-group-item:first-child,
+.list-group-item:nth-child(2),
+.list-group-item:nth-child(3) {
+    border-radius: 0px;
+}
+
+
+
+.card_icon {
+    font-size: 1rem;
+    margin: 10px auto;
+}
+
+.Dashboard {
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-align: start;
+    margin-left: 20px;
+    color: #7EADDB;
+
+}
+
+.icons {
+    color: #7EADDB;
+    /*width: 40px;*/
+    /*height: 40px;*/
+}
+.list-group{
+    --bs-list-group-bg:#F5F5F5;
+}
+
+
+.MPOS {
+    color: #7EADDB;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+/*.list-group-item:hover{*/
+/*    transform: scale(1.1);*/
+/*}*/
+thead{
+    background-color: #7EADDB;
+    color: #ffffff;
+}
