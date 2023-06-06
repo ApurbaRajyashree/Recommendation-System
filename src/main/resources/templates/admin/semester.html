@@ -28,7 +28,7 @@
                         <use xlink:href="#check-circle-fill"/>
                     </svg>
 
-                    <span>You have successfully added a new department!</span>
+                    <span>You have successfully added a new semester!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
@@ -56,10 +56,10 @@
             <div class="role_input  mt-5">
                 <form class="login" th:action="@{/role/create}" method="post" th:object="${role}"
                       enctype="multipart/form-data">
-                    <div class="MPOS">Create a new Department
+                    <div class="MPOS">Create a new semester
                     </div>
                     <div class="mb-4 mt-4">
-                        <label for="floatingInput">Department Name</label>
+                        <label for="floatingInput">Semester</label>
                         <div class="form-floating ">
                             <input type="text" class="form-control" id="floatingInput" th:field="*{name}" required>
                         </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="col-md-6 border mx-auto">
             <div class="role_table  mt-5">
-                <div class="MPOS">Department Table
+                <div class="MPOS">Semester Table
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mt-3" >
@@ -79,17 +79,17 @@
                         <tr>
 
                             <th>S.N.</th>
-                            <th>Department Name</th>
+                            <th>Semester Name</th>
                             <th>Is Active</th>
                             <th>Action</th>
-                            <th>Semester</th>
-                            <th>Course</th>
+                            <th>Department</th>
                         </tr>
                         </thead>
                         <tbody th:each="role,Index:${roles}">
                         <tr >
                             <td th:text="${Index.count}"></td>
                             <td th:text="${role.name}"></td>
+                            <td th:text="${role.roleType}"></td>
 
                             <td>
                                 <a th:href="@{/role/edit/}+${role.id}">
