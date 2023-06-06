@@ -1,4 +1,4 @@
-package com.example.nrs.controller.UserController;
+package com.example.nrs.controller;
 
 import com.example.nrs.dto.UserDto;
 import com.example.nrs.service.DepartmentService;

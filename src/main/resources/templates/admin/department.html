@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 
-<head th:insert="~{internal/fragments/sidebar_container.html :: html_head('role-pagen ')}">
+<head th:insert="~{fragment/sidebar_container.html :: html_head('role-pagen ')}">
 
     <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/create-role.css}">-->
     <!--    <style>-->
@@ -13,7 +13,7 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="~{internal/fragments/sidebar_container.html :: sidebars_master}"></div>
+        <div th:replace="~{fragments/sidebar_container.html :: sidebars_master}"></div>
 
 
         <div class="col-md-4 border  mx-auto">
@@ -28,7 +28,7 @@
                         <use xlink:href="#check-circle-fill"/>
                     </svg>
 
-                    <span>You have successfully added a new Role!</span>
+                    <span>You have successfully added a new department!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
@@ -54,37 +54,16 @@
             </div>
 
             <div class="role_input  mt-5">
-                <form class="login" th:action="@{/role/create}" method="post" th:object="${role}"
+                <form class="login" th:action="@{/department/create}" method="post" th:object="${department}"
                       enctype="multipart/form-data">
-                    <div class="MPOS">Create a new Role
+                    <div class="MPOS">Create a new Department
                     </div>
                     <div class="mb-4 mt-4">
-                        <label for="floatingInput">Role Name</label>
+                        <label for="floatingInput">Department Name</label>
                         <div class="form-floating ">
-                            <input type="text" class="form-control" id="floatingInput" th:field="*{name}" required>
-
-                        </div>
-
-                    </div>
-                    <div class="mb-4">
-                        <label for="Category" class=""> Category</label>
-                        <select class="form-select mt-2" aria-label="Default select example" id="Category"
-                                th:field="*{roleType}" required>
-                            <option value="" disabled>-- select --</option>
-                            <option th:each="roleOpt : ${T(com.meta.userpostproject.model.RoleType).values()}"
-                                    th:value="${roleOpt}" th:text="${roleOpt}">>
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="floatingTextarea2">Description</label>
-                        <div class="form-floating">
-                            <textarea class="form-control" id="floatingTextarea2" style="height: 100px"
-                                      th:field="*{description}" required></textarea>
+                            <input type="text" class="form-control" id="floatingInput" th:field="*{departmentName}" required>
                         </div>
                     </div>
-                    <button class="btn btn-dark upload_btn mt-4 me-3" type="reset">Reset</button>
                     <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Submit</button>
                 </form>
             </div>
@@ -92,7 +71,7 @@
         </div>
         <div class="col-md-6 border mx-auto">
             <div class="role_table  mt-5">
-                <div class="MPOS">Role Table
+                <div class="MPOS">Department Table
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mt-3" >
@@ -100,22 +79,21 @@
                         <tr>
 
                             <th>S.N.</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Action</th>
+                            <th>Department Name</th>
+                            <th>Is Active</th>
                         </tr>
                         </thead>
-                        <tbody th:each="role,Index:${roles}">
+                        <tbody th:each="department,Index:${departments}">
                         <tr >
                             <td th:text="${Index.count}"></td>
-                            <td th:text="${role.name}"></td>
-                            <td th:text="${role.roleType}"></td>
+                            <td th:text="${department.departmentName}"></td>
+                            <td th:text="${department.isActive()}"></td>
 
                             <td>
-                                <a th:href="@{/role/edit/}+${role.id}">
+<!--                                <a th:href="@{/role/edit/}+${role.id}">-->
                                     <i class="fa-solid fa-pen-to-square" ></i>
                                 </a>
-                                <a th:href="@{/role/delete/}+${role.id}">
+<!--                                <a th:href="@{/role/delete/}+${role.id}">-->
                                     <i class="fa-solid fa-trash" style="color: #f50025;"></i>
                                 </a>
                             </td>

@@ -1,4 +1,4 @@
-package com.example.nrs.controller.AdminController;
+package com.example.nrs.controller.Admin;
 
 import com.example.nrs.dto.DepartmentDto;
 import com.example.nrs.service.DepartmentService;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class DepartmentController {
 
     public final DepartmentService departmentService;
@@ -28,7 +28,7 @@ public class DepartmentController {
         model.addAttribute("department", new DepartmentDto());
         List<DepartmentDto> departments = departmentService.getAllDepartment();
         model.addAttribute("departments", departments);
-        return "department";
+        return "admin/department";
     }
 
     @RequestMapping(value = "/department/create",method = RequestMethod.POST)
@@ -37,7 +37,7 @@ public class DepartmentController {
 
         if (result.hasErrors()) {
             model.addAttribute("department", departmentDto);
-            return "/department";
+            return "admin/department";
         }
         try {
             departmentService.createDepartment(departmentDto);
