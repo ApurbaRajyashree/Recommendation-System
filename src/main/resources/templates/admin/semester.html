@@ -17,7 +17,59 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="~{fragments/sidebar_container.html :: sidebars_master}"></div>
+<!--        <div th:replace="~{fragments/sidebar_container.html :: sidebars_master}"></div>-->
+        <div class="container-fluid">
+            <div class="row">
+                <div th:fragment="sidebars_master" class="col-md-2 sidebar m-0 border">
+                    <div class="mx-auto mt-5 text-center">
+
+                        <div class="Dashboard">
+                            <a th:href="@{/admin}" class="text-decoration-none">Dashboard</a>
+
+                        </div>
+                    </div>
+
+                    <ul class="list-group mt-5">
+                        <li class="list-group-item  ">
+                            <a th:href="@{/admin/decidePost}" class="text-decoration-none text-dark">
+                                <i class="far fa-list-alt icons mx-2 fs-4"></i>
+                                Note Approval
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <i class="fas fa-vote-yea icons mx-2 fs-4"></i>
+                            Teacher Approval
+                        </li>
+
+                        <li class="list-group-item ">
+                            <i class="fas fa-user-shield icons mx-2 fs-4"></i>
+                            <span class="dropdown" style="width: 100%;">
+                                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Master Data Setup
+                                </span>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/category}">Department Setup</a></li>
+                                    <li><a class="dropdown-item" href="#">Semester Setup</a></li>
+                                    <li><a class="dropdown-item" href="#">Course Setup</a></li>
+                                </ul>
+                            </span>
+                        </li>
+                        <a  onclick="showPopup()">
+                            <li class="list-group-item ">
+                                <i class="fas fa-sign-out-alt icons mx-2 fs-4"></i>
+                                Log out
+                            </li>
+                        </a>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
 
 
         <div class="col-md-4 border  mx-auto">
