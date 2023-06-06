@@ -1,5 +1,6 @@
 package com.example.nrs.entity;
 
+import com.example.nrs.dto.SemesterDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -41,4 +42,11 @@ public class Semester {
 
     @Column(name = "is_active")
     private boolean isActive=Boolean.TRUE;
+
+    public Semester(SemesterDto semesterDto){
+        this.id=semesterDto.getId();
+        this.semesterName=semesterDto.getSemesterName();
+        this.department=semesterDto.getDepartment();
+        this.isActive=semesterDto.isActive();
+    }
 }

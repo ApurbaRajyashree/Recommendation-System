@@ -1,5 +1,6 @@
 package com.example.nrs.entity;
 
+import com.example.nrs.dto.CourseDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -45,4 +46,12 @@ public class Course {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "course")
     @JsonManagedReference(value = "course")
     private List<Note> noteList;
+
+    public Course(CourseDto courseDto){
+        this.id=courseDto.getId();
+        this.courseName=courseDto.getCourseName();
+        this.courseDescription=courseDto.getCourseDescription();
+        this.isActive=courseDto.getIsActive();
+        this.semester=courseDto.getSemester();
+    }
 }

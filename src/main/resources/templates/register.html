@@ -132,7 +132,7 @@
 
                         </div>
                         <div class="u-align-right u-form-group u-form-submit">
-                            <button class="u-button-style u-palette-3-base u-btn-1 btn btn-primary" type="submit">
+                            <button onclick="showToast()" class="u-button-style u-palette-3-base u-btn-1 btn btn-primary" type="submit">
                                 Sign up
                             </button>
                         </div>
@@ -144,6 +144,7 @@
             </div>
         </div>
     </div>
+    <div id="tostbox"></div>
 </section>
 
 <script>
@@ -168,6 +169,19 @@
         }
     }
 </script>
+<script>
+
+    let toastBox = document.getElementById('toastBox');
+    let successMsg= th:text="${error}"
+
+        function showToast() {
+            let toast = document.createElement('div');
+            toast.classList.add('toast');
+            toast.innerHTML = 'success';
+            toastBox.appendChild(toast);
+        }
+</script>
+
 
 </body>
 </html>

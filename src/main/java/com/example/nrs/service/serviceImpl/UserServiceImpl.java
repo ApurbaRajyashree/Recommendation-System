@@ -8,6 +8,9 @@ import com.example.nrs.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -29,5 +32,11 @@ public class UserServiceImpl implements UserService {
         user.setRole(Role.USER);
         userRepo.save(user);
         return new UserDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUser() {
+        List<User> users = userRepo.findAll();
+        return users.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.nrs.entity;
 
+import com.example.nrs.dto.NoteDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -52,6 +53,9 @@ public class Note {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "remark")
+    private String remark;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @JsonBackReference(value = "course")
@@ -65,4 +69,18 @@ public class Note {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "note")
     @JsonManagedReference(value = "comment")
     private List<Comment> commentList;
+
+    public Note(NoteDto noteDto){
+        this.id=noteDto.getId();
+        this.fileName=noteDto.getFileName();
+        this.filePath=noteDto.getFilePath();
+        this.noteTitle=noteDto.getNoteTitle();
+        this.noteDescription=noteDto.getNoteDescription();
+        this.noteStatus=noteDto.getNoteStatus();
+        this.course=noteDto.getCourse();
+        this.user=noteDto.getUser();
+        this.isActive=noteDto.getIsActive();
+        this.remark=noteDto.getRemark();
+        this.dateOfNoteCreation=noteDto.getDateOfNoteCreation();
+    }
 }

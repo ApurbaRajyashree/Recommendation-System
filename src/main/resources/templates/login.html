@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html style="font-size: 16px;" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
@@ -47,16 +47,17 @@
     <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-align-center u-container-align-center u-container-style u-expanded-width-xs u-group u-shape-rectangle u-group-1">
             <div class="u-container-layout u-container-layout-1">
+                <div id="tostbox"></div>
                 <h3 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Welcome
                     Back</h3>
                 <div class="u-expanded-width u-form u-login-control u-white u-form-1">
                     <form
-                          class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form"
-                          name="form"
-                          role="form"
-                          th:action="@{/login}"
-                          style="padding: 30px;"
-                          method="post">
+                            class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form"
+                            name="form"
+                            role="form"
+                            th:action="@{/login}"
+                            style="padding: 30px;"
+                            method="post">
                         <div class="u-form-group u-form-name">
                             <label for="username-a30d" class="u-label">Username *</label>
                             <input type="text" placeholder="Enter your Username" id="username-a30d" name="username"
@@ -71,11 +72,14 @@
                                    class="u-grey-5 u-input u-input-rectangle u-input-2" required="">
                         </div>
                         <div class="u-align-right u-form-group u-form-submit">
-                            <button type="submit" value="submit" class="u-button-style u-palette-3-base u-btn-1 btn btn-primary">Sign in</button>
+                            <button type="submit" value="submit"
+                                    class="u-button-style u-palette-3-base u-btn-1 btn btn-primary"
+                                    onclick="showToast()">Sign in
+                            </button>
                         </div>
                     </form>
                 </div>
-                <a href="https://nicepage.one"
+                <a href="#"
                    class="u-align-center u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-forgot-password u-none u-text-grey-40 u-text-hover-palette-4-base u-btn-2">Forgot
                     password?</a>
                 <a th:href="@{/register}"
@@ -85,6 +89,16 @@
         </div>
     </div>
 </div>
+<script>
+    let toastBox = document.getElementById('toastBox');
+    let successMsg=
 
+    function showToast() {
+        let toast = document.createElement('div');
+        toast.classList.add('toast');
+        toast.innerHTML = 'success';
+        toastBox.appendChild(toast);
+    }
+</script>
 </body>
 </html>

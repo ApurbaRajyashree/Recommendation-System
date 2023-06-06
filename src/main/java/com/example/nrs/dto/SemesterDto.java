@@ -2,6 +2,7 @@ package com.example.nrs.dto;
 
 import com.example.nrs.entity.Course;
 import com.example.nrs.entity.Department;
+import com.example.nrs.entity.Semester;
 import com.example.nrs.entity.SemesterName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +21,11 @@ public class SemesterDto {
     private Department department;
     private List<Course> courseList;
    private boolean isActive=Boolean.TRUE;
+
+    public SemesterDto(Semester semester){
+        this.id=semester.getId();
+        this.semesterName=semester.getSemesterName();
+        this.department=semester.getDepartment();
+        this.isActive=semester.isActive();
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.nrs.dto;
 
+import com.example.nrs.entity.Course;
 import com.example.nrs.entity.Note;
 import com.example.nrs.entity.Semester;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,12 @@ public class CourseDto {
     private Semester semester;
 
     private List<Note> noteList;
+
+    public CourseDto(Course course){
+        this.id=course.getId();
+        this.courseName=course.getCourseName();
+        this.courseDescription=course.getCourseDescription();
+        this.isActive=course.getIsActive();
+        this.semester=course.getSemester();
+    }
 }
