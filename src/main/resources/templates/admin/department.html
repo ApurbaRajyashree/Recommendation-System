@@ -48,7 +48,7 @@
                                     Master Data Setup
                                 </span>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" >Department Setup</a></li>
+                                    <li><a th:href="@{/admin/department}" class="dropdown-item" >Department Setup</a ></li>
                                     <li><a class="dropdown-item" href="#">Semester Setup</a></li>
                                     <li><a class="dropdown-item" href="#">Course Setup</a></li>
                                 </ul>
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="role_input  mt-5">
-                        <form class="login" th:action="@{/department/create}" method="post" th:object="${department}"
+                        <form class="login" th:action="@{/admin/department/create}" method="post" th:object="${department}"
                               enctype="multipart/form-data">
                             <div class="MPOS">Create a new Department
                             </div>
@@ -110,9 +110,10 @@
                                 <label for="floatingInput">Department Name</label>
                                 <div class="form-floating ">
                                     <input type="text" class="form-control" id="floatingInput" th:field="*{departmentName}" required>
+                                    <p th:errors="*{departmentName}" class="text-danger"
+                                       th:if="${#fields.hasErrors('departmentName')}"></p>
                                 </div>
                             </div>
-                            <button class="btn btn-dark upload_btn mt-4 me-3" type="reset">Reset</button>
                             <button class="btn  btn-primary upload_btn_submit ms-4 mt-4" type="submit">Submit</button>
                         </form>
                     </div>
@@ -140,7 +141,7 @@
                                     <td th:text="${department.isActive()}"></td>
 
                                     <td>
-                                        <!--                                <a th:href="@{/role/delete/}+${role.id}">-->
+                                          <a th:href="@{'/admin/department/delete/' +${department.id}}">
                                         <i class="fa-solid fa-trash" style="color: #f50025;"></i>
                                         </a>
                                     </td>

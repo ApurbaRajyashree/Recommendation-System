@@ -20,7 +20,6 @@ import java.util.List;
 @Table(name = "department", uniqueConstraints = {
         @UniqueConstraint(name = "uk_department_name",columnNames = "name")
 })
-@SQLDelete(sql = "UPDATE Department d SET d.isActive=false where d.id=?")
 @Where(clause = "is_active=true")
 public class Department {
     @Id

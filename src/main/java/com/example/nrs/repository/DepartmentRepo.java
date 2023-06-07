@@ -17,5 +17,5 @@ public interface DepartmentRepo extends JpaRepository<Department,Integer> {
     List<User> findAllUserByDepartmentId(int id);
 
     @Query(value = "UPDATE department  SET is_active=false where id=?1", nativeQuery = true)
-    void deleteById(int integer);
+    void deleteById(Integer integer);
 }

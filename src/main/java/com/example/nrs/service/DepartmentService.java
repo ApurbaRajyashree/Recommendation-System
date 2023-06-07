@@ -10,6 +10,6 @@ public interface DepartmentService {
     List<DepartmentDto> getAllDepartment();
     DepartmentDto getDepartmentByName(String name);
 
-    String deleteDepartment(int id);
+    String deleteDepartment(Integer id);
 
 }
