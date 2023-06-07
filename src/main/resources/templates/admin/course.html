@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Semester Setup</title>
+    <title>Course Setup</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -49,8 +49,8 @@
                                 </span>
                                 <ul class="dropdown-menu">
                                     <li><a th:href="@{/admin/department}" class="dropdown-item" >Department Setup</a ></li>
-                                    <li><a th:href="@{/admin/semester}" class="dropdown-item" href="#">Semester Setup</a></li>
-                                    <li><a class="dropdown-item" href="#">Course Setup</a></li>
+                                    <li><a th:href="@{/admin/semester}" class="dropdown-item">Semester Setup</a></li>
+                                    <li><a th:href="@{/admin/course}" class="dropdown-item">Course Setup</a></li>
                                 </ul>
                             </span>
                 </li>
@@ -102,29 +102,35 @@
             </div>
 
             <div class="role_input  mt-5">
-                <form class="login" th:action="@{/admin/semester/create}" method="post" th:object="${semesterRequest}"
+                <form class="login" th:action="@{/admin/course/create}" method="post" th:object="${course}"
                       enctype="multipart/form-data">
                     <div class="MPOS">Create a new semester
                     </div>
-                    <div class="mb-4">
-                        <label for="semesterName" class=""> Semester</label>
-                        <select class="form-select mt-2" aria-label="Default select example" id="semesterName"
-                                th:field="*{semesterNames}"  multiple required="">
-                            <option value="" disabled>-- select --</option>
-                            <option th:each="semesterOpt : ${T(com.example.nrs.entity.SemesterName).values()}"
-                                    th:value="${semesterOpt}" th:text="${semesterOpt}">>
-                            </option>
-                        </select>
+                    <div class="mb-4 mt-4">
+                        <label for="floatingInput">Course Name</label>
+                        <div class="form-floating ">
+                            <input type="text" class="form-control" id="floatingInput" th:field="*{courseName}" required>
+                            <p th:errors="*{courseName}" class="text-danger"
+                               th:if="${#fields.hasErrors('courseName')}"></p>
+                        </div>
                     </div>
                     <div class="mb-4">
-                        <label for="department" class=""> Department</label>
+                        <label for="department" class=""> Description </label>
+                        <div class="form-floating">
+                            <textarea class="form-control" id="floatingTextarea2" style="height: 180px"  th:field="*{courseDescription}"></textarea>
+                            <p th:errors="*{courseDescription}" class="text-danger"
+                               th:if="${#fields.hasErrors('courseDescription')}"></p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="department" class=""> Semester</label>
                         <select class="form-select mt-2" aria-label="Default select example" id="department"
-                                th:field="*{department}" required="">
+                                th:field="*{semester}" required="">
                             <option value="0">select option</option>
                             <option
-                                    th:each="department : ${departments}"
-                                    th:value="${department.id}"
-                                    th:text="${department.departmentName}"></option>
+                                    th:each="semester : ${semesters}"
+                                    th:value="${semester.id}"
+                                    th:text="${semester.department.departmentName}+ ' , '+${semester.semesterName}"></option>
                             </option>
                         </select>
                     </div>
@@ -135,7 +141,7 @@
         </div>
         <div class="col-md-6 border mx-auto">
             <div class="role_table  mt-5">
-                <div class="MPOS">Semester Table
+                <div class="MPOS">Course Table
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mt-3" >
@@ -143,20 +149,24 @@
                         <tr>
 
                             <th>S.N.</th>
+                            <th>Couse Title</th>
+                            <th>Course Description</th>
                             <th>Semester</th>
                             <th>Department</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody th:each="semester,Index:${semesters}">
+                        <tbody th:each="course,Index:${courses}">
                         <tr >
                             <td th:text="${Index.count}"></td>
-                            <td th:text="${semester.getSemesterName()}"></td>
-                            <td th:text="${semester.getDepartment().getDepartmentName()}"></td>
+                            <td th:text="${course.getCourseName()}"></td>
+                            <td th:text="${course.getCourseDescription()}"></td>
+                            <td th:text="${course.getSemester().getSemesterName()}"></td>
+                            <td th:text="${course.getSemester().getDepartment().getDepartmentName()}"></td>
 
                             <td>
                                 </a>
-                                <a th:href="@{'/admin/semester/delete/'+${semester.id}}">
+                                <a th:href="@{'/admin/course/delete/'+${course.id}}">
                                     <i class="fa-solid fa-trash" style="color: #f50025;"></i>
                                 </a>
                             </td>
