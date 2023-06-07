@@ -50,7 +50,7 @@
                 <div id="tostbox"></div>
                 <h3 class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1">Welcome
                     Back</h3>
-                <div th:if="${param.success}" class="my-3">
+                <div th:if="${param.logout}" class="my-3">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -61,14 +61,14 @@
                             <use xlink:href="#check-circle-fill"/>
                         </svg>
 
-                        <span>You have successfully added a new department!</span>
+                        <span>Logout successfully!</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                 </div>
 
 
-                <div th:if="${param.fail}" class="my-3">
+                <div th:if="${param.error}" class="my-3">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
@@ -79,8 +79,7 @@
                             <use xlink:href="#exclamation-triangle-fill"/>
                         </svg>
 
-
-                        <span th:text="${error}"></span>
+                        <span > Invalid username and password</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -95,7 +94,7 @@
                             style="padding: 30px;"
                             method="post">
                         <div class="u-form-group u-form-name">
-                            <label for="username-a30d" class="u-label">Username *</label>
+                            <label for="username-a30d" class="u-label">Email *</label>
                             <input type="text" placeholder="Enter your Username" id="username-a30d" name="username"
                                    class="u-grey-5 u-input u-input-rectangle u-input-1" required="">
                         </div>
@@ -115,9 +114,9 @@
                         </div>
                     </form>
                 </div>
-                <a href="#"
-                   class="u-align-center u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-forgot-password u-none u-text-grey-40 u-text-hover-palette-4-base u-btn-2">Forgot
-                    password?</a>
+<!--                <a href="#"-->
+<!--                   class="u-align-center u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-forgot-password u-none u-text-grey-40 u-text-hover-palette-4-base u-btn-2">Forgot-->
+<!--                    password?</a>-->
                 <a th:href="@{/register}"
                    class="u-align-center   u-border-none u-btn u-button-style u-login-control u-login-create-account u-none u-text-grey-40 u-text-hover-palette-4-base u-btn-3">Don't
                     have an account?</a>

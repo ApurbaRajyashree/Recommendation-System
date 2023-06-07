@@ -17,7 +17,6 @@
 <body>
 
 
-<!--        <div th:replace="~{fragments/sidebar_container.html :: sidebars_master}"></div>-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 sidebar m-0 border">
@@ -49,12 +48,12 @@
                                 </span>
                                 <ul class="dropdown-menu">
                                     <li><a th:href="@{/admin/department}" class="dropdown-item" >Department Setup</a ></li>
-                                    <li><a class="dropdown-item" href="#">Semester Setup</a></li>
+                                    <li><a th:href="@{/admin/semester}" class="dropdown-item" href="#">Semester Setup</a></li>
                                     <li><a class="dropdown-item" href="#">Course Setup</a></li>
                                 </ul>
                             </span>
                         </li>
-                        <a  onclick="showPopup()">
+                        <a th:href="@{/logout}">
                             <li class="list-group-item ">
                                 <i class="fas fa-sign-out-alt icons mx-2 fs-4"></i>
                                 Log out

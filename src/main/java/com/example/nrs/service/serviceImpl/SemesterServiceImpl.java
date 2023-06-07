@@ -1,9 +1,7 @@
 package com.example.nrs.service.serviceImpl;
 
-import com.example.nrs.dto.DepartmentDto;
 import com.example.nrs.dto.SemesterDto;
 import com.example.nrs.dto.SemesterRequestDto;
-import com.example.nrs.entity.Department;
 import com.example.nrs.entity.Semester;
 import com.example.nrs.entity.SemesterName;
 import com.example.nrs.repository.SemesterRepo;
@@ -24,7 +22,7 @@ public class SemesterServiceImpl implements SemesterService {
     }
 
     @Override
-    public SemesterDto createSemester(SemesterDto semesterDto) {
+    public String createSemester(SemesterDto semesterDto) {
         Semester semester = new Semester(semesterDto);
         List<Semester> semesters = semesterRepo.findAll();
         for (Semester eachSemester : semesters) {
@@ -36,31 +34,38 @@ public class SemesterServiceImpl implements SemesterService {
             }
         }
         semesterRepo.save(semester);
-        return new SemesterDto(semester);
+        return "Semester created successfully";
     }
 
     @Override
-    public List<SemesterDto> createSemesters(SemesterRequestDto semesterRequestDto) {
-        List<SemesterName> semesterNameList=semesterRequestDto.getSemesterNames();
-        List<Semester> semesters=semesterRepo.findSemestersByDepartment_Id(semesterRequestDto.getDepartment().getId());
-        List<Semester> newSemesters=new ArrayList<>();
-        for (Semester eachSemester:semesters){
-            for (SemesterName eachSemesterName:semesterNameList){
-                if(eachSemesterName.equals(eachSemester.getSemesterName())){
-                    throw new RuntimeException(eachSemester.getSemesterName() +
-                            " already exist in department " + eachSemester.getDepartment().getDepartmentName());
-                }else {
-                    Semester semester=new Semester();
-                    semester.setSemesterName(eachSemesterName);
-                    semester.setDepartment(eachSemester.getDepartment());
-                    semester.setActive(true);
-                    newSemesters.add(semester);
+    public String createSemesters(SemesterRequestDto semesterRequestDto) {
+        if(semesterRequestDto.getDepartment()==null){
+            throw new RuntimeException("Department must be selected");
+        }
+        List<SemesterName> semesterNameList = semesterRequestDto.getSemesterNames();
+        List<Semester> semesters = semesterRepo.findSemestersByDepartment_Id(semesterRequestDto.getDepartment().getId());
+        List<Semester> newSemesters = new ArrayList<>();
+        if (!semesters.isEmpty()) {
+            for (Semester eachSemester : semesters) {
+                for (SemesterName eachSemesterName : semesterNameList) {
+                    if (eachSemesterName.equals(eachSemester.getSemesterName())) {
+                        throw new RuntimeException(eachSemester.getSemesterName() +
+                                " already exist in department " + eachSemester.getDepartment().getDepartmentName());
+                    }
                 }
             }
         }
+        for (SemesterName eachSemesterName : semesterNameList) {
+            Semester semester = new Semester();
+            semester.setSemesterName(eachSemesterName);
+            semester.setDepartment(semesterRequestDto.getDepartment());
+            semester.setActive(true);
+            newSemesters.add(semester);
+        }
+
 
         semesterRepo.saveAll(newSemesters);
-        return newSemesters.stream().map(x-> new SemesterDto(x)).collect(Collectors.toList());
+        return "Semesters created successfully";
     }
 
     @Override
@@ -71,7 +76,7 @@ public class SemesterServiceImpl implements SemesterService {
 
     @Override
     public List<SemesterDto> getSemestersByDepartment(Integer id) {
-        List<Semester> semesters=semesterRepo.findSemestersByDepartment_Id(id);
+        List<Semester> semesters = semesterRepo.findSemestersByDepartment_Id(id);
         if (semesters != null) {
             return semesters.stream().map(SemesterDto::new).collect(Collectors.toList());
         } else

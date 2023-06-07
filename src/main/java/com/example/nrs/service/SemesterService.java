@@ -6,12 +6,12 @@ import com.example.nrs.dto.SemesterRequestDto;
 import java.util.List;
 
 public interface SemesterService {
-    SemesterDto createSemester(SemesterDto semesterDto);
+    String createSemester(SemesterDto semesterDto);
 
-    public List<SemesterDto> createSemesters(SemesterRequestDto semesterRequestDtoDto);
+    String  createSemesters(SemesterRequestDto semesterRequestDtoDto);
 
 
-        List<SemesterDto> getAllSemester();
+    List<SemesterDto> getAllSemester();
     public List<SemesterDto> getSemestersByDepartment(Integer id);
 
     String deleteSemester(Integer id);

@@ -18,8 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="semester")
-@SQLDelete(sql = "UPDATE Semester s set s.isActive=true where s.id=?")
+@Table(name = "semester", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_semster_department", columnNames = {"name", "department_id"})}
+       )
 @Where(clause = "is_active=true")
 public class Semester {
     @Id
@@ -27,7 +28,7 @@ public class Semester {
     @Column(name="id")
     private Integer id;
 
-    @Column(name="name",unique = true,nullable = false)
+    @Column(name="name",nullable = false)
     @Enumerated(EnumType.STRING)
     private SemesterName semesterName;
 
