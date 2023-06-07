@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+
+</head>
+
+<body>
+<div >
+    <div class="col-md-2 sidebar m-0" th:fragment="sidebar" >
+        <div class="mx-auto mt-5 text-center">
+
+            <a th:href="@{/post}" class="text-decoration-none"><div class="Dashboard">Dashboard</div></a>
+        </div>
+
+        <ul class="list-group mt-5">
+
+            <a li class="list-group-item  " th:href="@{/post/create}">
+                <img src="/images/cloud-computing.png" alt="" class="icons ms-3 me-2">
+                <span id="createText">Create</span>
+                </li>
+            </a>
+
+            <a>
+                <li class="list-group-item ">
+                    <img src="/images/bookmark.png" alt="" class="icons ms-3 me-2">
+
+                    My Saved
+                </li>
+            </a>
+
+            <a  th:href="@{/logout}">
+                <li class="list-group-item ">
+                    <img src="/images/logout-svgrepo-com.png" alt="" class="icons ms-3 me-2">
+
+                    Log out
+                </li>
+            </a>
+
+        </ul>
+
+    </div>
+
+
+
+
+</div>
+</body>
+</html>

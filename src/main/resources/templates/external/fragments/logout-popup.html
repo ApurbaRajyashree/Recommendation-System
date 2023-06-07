@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="popup">
+  <!--            this part is for logout popup box        -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p>Are you sure you want to logout?</p>
+      <button class="popup-button" onclick="confirmLogout()">Yes</button>
+      <button class="popup-button" onclick="hidePopup()">No</button>
+    </div>
+  </div>
+  <!--            up to here - logout popup box      -->
+
+  <script th:src="@{/javascript/popupbox.js}" ></script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <!--  title and bootstrap link-->
+  <th:block th:replace="~{external/fragments/html-head :: html_head('view-post')}"></th:block>
+
+   <link rel="stylesheet" th:href="@{/css/user/single-post-view.css}">
+
+
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div th:replace="~{external/fragments/sidebar :: sidebar}"> </div>
+
+    <div class="col-md-6 mx-auto" th:each="viewPost:${post}">
+      <div class="main_post mt-5">
+        <img  alt=""  th:src="${viewPost.filePath}" class="img-fluid">
+        <div class="row post_details ms-0 me-0 align-items-center">
+
+          <div class="col-6  my-2 lh-1" >
+            <img src="/image/user-circle-svgrepo-com.png" alt="" class="icons_post">
+            <span class="username">UserName</span>
+            <br>
+
+            <span class="date text-muted ms-5" th:text="${viewPost.dateTime}"></span>
+
+
+          </div>
+          <div class="col-6  my-2">
+            <div class="row">
+              <div class="col-6 text-end">
+                <img src="/image/like-svgrepo-com.svg" alt="" class="img-fluid icons_post">
+                <img src="/image/bookmark.svg" alt="" class="img-fluid icons_post">
+              </div>
+              <div class="col-6 text-muted">View 12.5k
+                <br>
+                Like 12.5k
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+        <!--                    post description start -->
+        <div class="post_description my-3 fs-6 lh-base"  >
+                        <span th:text="${viewPost.description}">
+
+                        </span>
+        </div>
+        <!--                     post description end-->
+      </div>
+    </div>
+
+
+    <div class="col-md-3 mt-5 me-3 mx-auto">
+      <div class="comment_box ">
+        <div class="single_box mt-3 mb-3">
+          <img src="/image/user-circle-svgrepo-com.png" alt="" class="icons_post">
+          <span class="ms-1 username">UserName</span>
+          <div class="comment_inside_box">
+            Hi I love your work. <br>
+            Looking great.
+
+          </div>
+        </div>
+        <div class="single_box mb-3">
+          <img src="/image/user-circle-svgrepo-com.png" alt="" class="icons_post">
+          <span class="ms-1 username">UserName</span>
+          <div class="comment_inside_box">
+            Hi I love your work. <br>
+            Looking great.
+
+          </div>
+        </div>
+        <div class="single_box mb-3">
+          <img src="/image/user-circle-svgrepo-com.png" alt="" class="icons_post">
+          <span class="ms-1 username">UserName</span>
+          <div class="comment_inside_box">
+            Hi I love your work. <br>
+            Looking great.
+
+          </div>
+        </div>
+        <div class="post_comment mt-5">
+          <input type="text" class="send_comment" placeholder="Leave your comment here">
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<div th:replace="~{external/fragments/logout-popup :: popup}"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
