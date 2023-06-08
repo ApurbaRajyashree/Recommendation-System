@@ -17,5 +17,5 @@ public interface NoteRepo extends JpaRepository<Note,Integer> {
     @Query(value = "select * from note where course_id=?1 and status=?2",nativeQuery = true)
     List<Note> findAllByCourse_IdAndNoteStatus(Integer id, String noteStatus);
 
-    List<Note> findAllByNoteStatus(String status);
+    List<Note> findAllByNoteStatus(Status status);
 }

@@ -78,4 +78,20 @@ public class User {
         this.collegeAddress=userDto.getCollegeAddress();
         this.isActive=userDto.isActive();
     }
+
+    public  boolean isTeacher(){
+        if(this.role.equals(Role.TEACHER)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public  boolean isUser(){
+        if(this.role.equals(Role.USER)){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

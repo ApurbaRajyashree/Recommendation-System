@@ -49,7 +49,7 @@ public class  SpringSecurity {
                         if (authority.getAuthority().equals("ADMIN")) {
                             response.sendRedirect("/admin/department");
                         } else {
-                            response.sendRedirect("/user/note");
+                            response.sendRedirect("/user/note/all-approved");
                         }
                     }
                 })

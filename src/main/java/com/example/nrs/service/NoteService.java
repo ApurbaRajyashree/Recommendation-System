@@ -16,4 +16,6 @@ public interface NoteService {
 
     List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, String status);
 
+    List<NoteDto> getAllNotesByStatus(Status status);
+
 }

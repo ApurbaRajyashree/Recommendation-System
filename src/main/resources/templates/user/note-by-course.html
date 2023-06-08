@@ -29,6 +29,7 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Description</th>
+              <th>File</th>
               <th>Date-Time</th>
               <th>Course</th>
               <th>Action</th>
@@ -38,7 +39,8 @@
             <tr >
               <td th:text="${Index.count}"></td>
               <td th:text="${note.getNoteTitle()}"></td>
-              <td th:text="${note.getNoteDescription()()}"></td>
+              <td th:text="${note.getNoteDescription()}"></td>
+              <td th:text="${note.filePath}"></td>
               <td th:text="${note.getDateOfNoteCreation()}"></td>
               <td th:text="${note.getCourse().courseName}"></td>
 

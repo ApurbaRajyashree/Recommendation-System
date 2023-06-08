@@ -3,8 +3,11 @@ package com.example.nrs.repository;
 import com.example.nrs.entity.Department;
 import com.example.nrs.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +19,8 @@ public interface DepartmentRepo extends JpaRepository<Department,Integer> {
             "                                             department_id=?1 ",nativeQuery = true)
     List<User> findAllUserByDepartmentId(int id);
 
-    @Query(value = "UPDATE department  SET is_active=false where id=?1", nativeQuery = true)
-    void deleteById(Integer integer);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Department  SET is_active = false  WHERE id = :id", nativeQuery = true)
+    void deleteById(@Param("id") Integer id);
 }

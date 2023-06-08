@@ -1,5 +1,6 @@
 package com.example.nrs.entity;
 
+import com.example.nrs.dto.TeacherApprovalProcessDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,24 +22,42 @@ public class TeacherApprovalProcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id",referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name="experience")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "experience" , nullable = false)
     private TeacherExperience teacherExperience;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "file_path")
-    private String filePath;
+    @Column(name = "detail", columnDefinition = "TEXT")
+    private String detail;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "education_qualification", nullable = false)
+    private EducationQualification educationQualification;
+
+    @Column(name = "university_or_college", nullable = false)
+    private String universityOrCollegeName;
 
     @Column(name = "remarks")
     private String remarks;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name="status")
+    @Column(name = "status")
     private Status status;
+
+    public TeacherApprovalProcess(TeacherApprovalProcessDto teacherApprovalProcessDto){
+        this.id=teacherApprovalProcessDto.getId();
+        this.user=teacherApprovalProcessDto.getUser();
+        this.date=teacherApprovalProcessDto.getDate();
+        this.detail=teacherApprovalProcessDto.getDetail();
+        this.educationQualification=teacherApprovalProcessDto.getEducationQualification();
+        this.universityOrCollegeName=teacherApprovalProcessDto.getUniversityOrCollegeName();
+        this.remarks=teacherApprovalProcessDto.getRemarks();
+        this.status=teacherApprovalProcessDto.getStatus();
+    }
 }

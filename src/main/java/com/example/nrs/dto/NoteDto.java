@@ -27,19 +27,17 @@ public class NoteDto {
     private Course course;
     private User user;
 
-//    public NoteDto(Note note){
-//        this.id=note.getId();
-//        this.fileName=note.getFileName();
-//        this.filePath=note.getFilePath();
-//        this.noteTitle=note.getNoteTitle();
-//        this.noteDescription=note.getNoteDescription();
-//        this.noteStatus=note.getNoteStatus();
-//        this.course=note.getCourse();
-//        this.user=note.getUser();
-//        this.isActive=note.getIsActive();
-//        this.remark=note.getRemark();
-//        this.dateOfNoteCreation=note.getDateOfNoteCreation();
-//    }
+    public NoteDto(Note note){
+        this.id=note.getId();
+        this.filePath=note.getFilePath();
+        this.noteTitle=note.getNoteTitle();
+        this.noteDescription=note.getNoteDescription();
+        this.noteStatus=note.getNoteStatus();
+        this.course=note.getCourse();
+        this.user=note.getUser();
+        this.isActive=note.getIsActive();
+        this.dateOfNoteCreation=note.getDateOfNoteCreation();
+    }
 
     public NoteDto(Integer id){
         this.id=id;

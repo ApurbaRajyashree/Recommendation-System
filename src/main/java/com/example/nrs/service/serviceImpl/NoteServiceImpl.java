@@ -54,25 +54,31 @@ public class NoteServiceImpl implements NoteService {
                         .noteStatus(Status.SUBMITTED)
                         .build();
         note = noteRepo.save(note);
-        return new NoteDto(note.getId());
+        return new NoteDto(note);
     }
 
     @Override
     public List<NoteDto> getAllNotes() {
         List<Note> notes=noteRepo.findAll();
-        return  notes.stream().map(x->new NoteDto(x.getId())).collect(Collectors.toList());
+        return  notes.stream().map(x->new NoteDto(x)).collect(Collectors.toList());
     }
 
     @Override
     public List<NoteDto> getAllNotesByUserEmail(String email) {
         User user=userRepo.findByUserEmail(email);
         List<Note> notes=noteRepo.findAllByUserId(user.getId());
-        return  notes.stream().map(x->new NoteDto(x.getId())).collect(Collectors.toList());
+        return  notes.stream().map(x->new NoteDto(x)).collect(Collectors.toList());
     }
 
     @Override
     public List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, String status) {
         List<Note> notes=noteRepo.findAllByCourse_IdAndNoteStatus(id,status);
-        return notes.stream().map(x-> new NoteDto(x.getId())).collect(Collectors.toList());
+        return notes.stream().map(x-> new NoteDto(x)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<NoteDto> getAllNotesByStatus(Status status) {
+        List<Note> notes=noteRepo.findAllByNoteStatus(status);
+        return notes.stream().map(x-> new NoteDto(x)).collect(Collectors.toList());
     }
 }

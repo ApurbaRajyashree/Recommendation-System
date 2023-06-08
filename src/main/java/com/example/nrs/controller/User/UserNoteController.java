@@ -24,7 +24,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class NoteController {
+public class UserNoteController {
     private final FileStoreUtils fileStoreUtils;
 
     private final NoteService noteService;
@@ -35,7 +35,7 @@ public class NoteController {
 
     private final NoteRepo noteRepo;
 
-    public NoteController(FileStoreUtils fileStoreUtils, NoteService noteService, UserRepo userRepo, CourseService courseService, NoteRepo noteRepo) {
+    public UserNoteController(FileStoreUtils fileStoreUtils, NoteService noteService, UserRepo userRepo, CourseService courseService, NoteRepo noteRepo) {
         this.fileStoreUtils = fileStoreUtils;
         this.noteService = noteService;
         this.userRepo = userRepo;
@@ -44,11 +44,10 @@ public class NoteController {
     }
 
     @GetMapping("/user/note")
-    public String department(Model model, Principal principal) {
+    public String note(Model model, Principal principal) {
         model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
         model.addAttribute("note", new NoteDto());
-//        List<NoteDto> noteDtos = noteService.getAllNotesByUserEmail(principal.getName());
-        List<NoteDto> noteDtos = noteService.getAllNotes();
+        List<NoteDto> noteDtos = noteService.getAllNotesByUserEmail(principal.getName());
         model.addAttribute("noteDtos", noteRepo.findAll());
         model.addAttribute("courses", courseService.getAllCourses());
         return "user/note";
@@ -91,5 +90,14 @@ public class NoteController {
         List<NoteDto> noteDtos = noteService.getAllNotesByCourseIdAndStatus(courseId,"APPROVED");
         model.addAttribute("notes", noteDtos);
         return "user/note-by-course";
+    }
+
+
+    @GetMapping("/user/note/all-approved")
+    public String course(Model model) {
+        model.addAttribute("note", new NoteDto());
+        List<NoteDto> noteDtos = noteService.getAllNotesByStatus(Status.APPROVED);
+        model.addAttribute("notes", noteDtos);
+        return "user/all-notes";
     }
 }

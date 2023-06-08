@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "note")
-@Where(clause = "is_active=false")
+@Where(clause = "is_active=true")
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,18 +57,17 @@ public class Note {
     @JsonBackReference(value = "users")
     private User user;
 
-//    public Note(NoteDto noteDto){
-//        this.id=noteDto.getId();
-//        this.fileName=noteDto.getFileName();
-//        this.filePath=noteDto.getFilePath();
-//        this.noteTitle=noteDto.getNoteTitle();
-//        this.noteDescription=noteDto.getNoteDescription();
-//        this.noteStatus=noteDto.getNoteStatus();
-//        this.course=noteDto.getCourse();
-//        this.user=noteDto.getUser();
-//        this.isActive=noteDto.getIsActive();
-//        this.dateOfNoteCreation=noteDto.getDateOfNoteCreation();
-//    }
+    public Note(NoteDto noteDto){
+        this.id=noteDto.getId();
+        this.filePath=noteDto.getFilePath();
+        this.noteTitle=noteDto.getNoteTitle();
+        this.noteDescription=noteDto.getNoteDescription();
+        this.noteStatus=noteDto.getNoteStatus();
+        this.course=noteDto.getCourse();
+        this.user=noteDto.getUser();
+        this.isActive=noteDto.getIsActive();
+        this.dateOfNoteCreation=noteDto.getDateOfNoteCreation();
+    }
 
 
 }
