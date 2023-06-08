@@ -13,11 +13,11 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class DepartmentController {
+public class AdminDepartmentController {
 
     public final DepartmentService departmentService;
 
-    public DepartmentController(DepartmentService departmentService) {
+    public AdminDepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 

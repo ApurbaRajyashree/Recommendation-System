@@ -69,4 +69,10 @@ public class NoteServiceImpl implements NoteService {
         List<Note> notes=noteRepo.findAllByUserId(user.getId());
         return  notes.stream().map(x->new NoteDto(x.getId())).collect(Collectors.toList());
     }
+
+    @Override
+    public List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, Status status) {
+        List<Note> notes=noteRepo.findAllByCourse_IdAndNoteStatus(id,status);
+        return notes.stream().map(x-> new NoteDto(x.getId())).collect(Collectors.toList());
+    }
 }
