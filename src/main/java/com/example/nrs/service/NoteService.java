@@ -14,6 +14,6 @@ public interface NoteService {
 
     List<NoteDto> getAllNotesByUserEmail(String email);
 
-    List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, Status status);
+    List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, String status);
 
 }

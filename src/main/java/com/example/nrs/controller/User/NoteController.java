@@ -88,7 +88,7 @@ public class NoteController {
     @GetMapping("/user/course/{courseId}/note")
     public String course(Model model, @PathVariable("courseId") Integer courseId) {
         model.addAttribute("note", new NoteDto());
-        List<NoteDto> noteDtos = noteService.getAllNotesByCourseIdAndStatus(courseId, Status.APPROVED);
+        List<NoteDto> noteDtos = noteService.getAllNotesByCourseIdAndStatus(courseId,"APPROVED");
         model.addAttribute("notes", noteDtos);
         return "user/note-by-course";
     }
