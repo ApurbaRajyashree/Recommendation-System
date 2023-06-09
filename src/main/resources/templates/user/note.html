@@ -18,7 +18,7 @@
         <!--        SUCCESS OR FAILED FILE UPLOAD INDICATION -->
 
 
-            <div th:if="${user.isUser()}" class="col-md-6 border mx-auto">
+            <div th:if="${user.isUser()}" class="col-md-10 border mx-auto">
                 <div class="user_input_post  mt-5">
 
                 <div class="my-3">
@@ -37,6 +37,11 @@
                     </div>
 
                 </div>
+                    <div>
+                        <p>
+                            <a th:href="@{/user/teacher-approval-request}">Click here</a> if you are a teacher or a professor looking to upload your notes in this page.
+                        </p>
+                    </div>
                 </div>
             </div>
 

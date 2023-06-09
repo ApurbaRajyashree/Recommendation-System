@@ -42,6 +42,8 @@ public class TeacherApprovalProcessDto {
         this.universityOrCollegeName=teacherApprovalProcess.getUniversityOrCollegeName();
         this.remarks=teacherApprovalProcess.getRemarks();
         this.status=teacherApprovalProcess.getStatus();
+        this.teacherExperience=teacherApprovalProcess.getTeacherExperience();
+
     }
 }
 

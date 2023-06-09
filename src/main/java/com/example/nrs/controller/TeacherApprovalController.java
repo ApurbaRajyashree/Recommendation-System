@@ -2,6 +2,7 @@ package com.example.nrs.controller;
 
 import com.example.nrs.dto.NoteDto;
 import com.example.nrs.dto.TeacherApprovalProcessDto;
+import com.example.nrs.entity.Status;
 import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.TeacherApprovalProcessService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -56,4 +58,63 @@ public class TeacherApprovalController {
 
     }
 
+    @GetMapping("/admin/teacher-approval-submitted")
+    public String teacherApprovalSubmitted(Model model, Principal principal) {
+        model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
+        model.addAttribute("teacherApprovalRequest", new TeacherApprovalProcessDto());
+        model.addAttribute("submittedRequest",teacherApprovalProcessService.getApprovalRequestByStatus(Status.SUBMITTED));
+        return "admin/teacher-approval-submitted";
+    }
+
+
+    @GetMapping("/admin/teacher-approved")
+    public String teacherApprovalAccept(Model model, Principal principal) {
+        model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
+        model.addAttribute("teacherApprovalRequest", new TeacherApprovalProcessDto());
+        model.addAttribute("submittedRequest",teacherApprovalProcessService.getApprovalRequestByStatus(Status.APPROVED));
+
+        return "admin/teacher-request-approved";
+    }
+
+
+    @GetMapping("/admin/teacher-rejected")
+    public String teacherApprovalReject(Model model, Principal principal) {
+        model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
+        model.addAttribute("teacherApprovalRequest", new TeacherApprovalProcessDto());
+        model.addAttribute("submittedRequest",teacherApprovalProcessService.getApprovalRequestByStatus(Status.REJECTED));
+
+        return "admin/teacher-request-rejected";
+    }
+
+
+    @GetMapping("/admin/teacher-approve/{teacherId}")
+    public String teacherApprove(@PathVariable("teacherId")Integer teacherId,@ModelAttribute("teacher-approve") TeacherApprovalProcessDto teacherApprovalProcessDto, BindingResult result, Model model,
+                                 RedirectAttributes redirectAttributes) {
+
+        String msg="";
+        try {
+            msg= teacherApprovalProcessService.approveTeacher(teacherId);
+        }catch (RuntimeException e){
+            redirectAttributes.addFlashAttribute("error",e.getMessage());
+            return "redirect:/admin/teacher-approval-submitted?fail";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return "redirect:/admin/teacher-approval-submitted?success";
+    }
+
+
+    @GetMapping("/admin/teacher-reject/{teacherId}")
+    public String teacherReject(@PathVariable("teacherId")Integer teacherId,@ModelAttribute("teacher-approve") TeacherApprovalProcessDto teacherApprovalProcessDto, BindingResult result, Model model,
+                                 RedirectAttributes redirectAttributes) {
+
+        String msg="";
+        try {
+            msg= teacherApprovalProcessService.rejectTeacher(teacherId);
+        }catch (RuntimeException e){
+            redirectAttributes.addFlashAttribute("error",e.getMessage());
+            return "redirect:/admin/teacher-approval-submitted?fail";
+        }
+        redirectAttributes.addFlashAttribute("msg",msg);
+        return "redirect:/admin/teacher-approval-submitted?success";
+    }
 }

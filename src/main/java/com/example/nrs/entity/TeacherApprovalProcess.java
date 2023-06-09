@@ -46,7 +46,7 @@ public class TeacherApprovalProcess {
     @Column(name = "remarks")
     private String remarks;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
@@ -59,5 +59,6 @@ public class TeacherApprovalProcess {
         this.universityOrCollegeName=teacherApprovalProcessDto.getUniversityOrCollegeName();
         this.remarks=teacherApprovalProcessDto.getRemarks();
         this.status=teacherApprovalProcessDto.getStatus();
+        this.teacherExperience=teacherApprovalProcessDto.getTeacherExperience();
     }
 }

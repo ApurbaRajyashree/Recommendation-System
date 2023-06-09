@@ -1,14 +1,18 @@
 package com.example.nrs.service.serviceImpl;
 
 import com.example.nrs.dto.TeacherApprovalProcessDto;
+import com.example.nrs.entity.Role;
 import com.example.nrs.entity.Status;
 import com.example.nrs.entity.TeacherApprovalProcess;
+import com.example.nrs.entity.User;
 import com.example.nrs.repository.TeacherApprovalProcessRepo;
+import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.TeacherApprovalProcessService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,8 +20,11 @@ public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcess
 
     private final TeacherApprovalProcessRepo teacherApprovalProcessRepo;
 
-    public TeacherApprovalProcessServiceImpl(TeacherApprovalProcessRepo teacherApprovalProcessRepo) {
+    private final UserRepo userRepo;
+
+    public TeacherApprovalProcessServiceImpl(TeacherApprovalProcessRepo teacherApprovalProcessRepo, UserRepo userRepo) {
         this.teacherApprovalProcessRepo = teacherApprovalProcessRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -26,7 +33,7 @@ public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcess
        teacherApprovalProcess.setDate(new Date());
        teacherApprovalProcess.setStatus(Status.SUBMITTED);
        teacherApprovalProcessRepo.save(teacherApprovalProcess);
-       return "Approval Request Saved Successfully";
+       return "Approval Request Sent Successfully \n Wait for a response from our administration";
     }
 
     @Override
@@ -36,7 +43,7 @@ public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcess
     }
 
     @Override
-    public List<TeacherApprovalProcessDto> getApprovalRequestByStatus(String status) {
+    public List<TeacherApprovalProcessDto> getApprovalRequestByStatus(Status status) {
         List<TeacherApprovalProcess> teacherApprovalProcessList=teacherApprovalProcessRepo.findAllByStatus(status);
         return teacherApprovalProcessList.stream().map(x-> new TeacherApprovalProcessDto(x)).collect(Collectors.toList());
     }
@@ -45,5 +52,34 @@ public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcess
     public String deleteApprovalRequest(Integer id) {
         teacherApprovalProcessRepo.deleteById(id);
         return "Deleted Successfully";
+    }
+
+
+    public String approveTeacher(Integer id){
+        Optional<TeacherApprovalProcess> teacherApprovalProcess=teacherApprovalProcessRepo.findById(id);
+        if(teacherApprovalProcess.isPresent()){
+            TeacherApprovalProcess teacherApprove=teacherApprovalProcess.get();
+            teacherApprove.setStatus(Status.APPROVED);
+            User user=teacherApprove.getUser();
+            user.setRole(Role.TEACHER);
+            teacherApprovalProcessRepo.save(teacherApprove);
+            userRepo.save(user);
+        }else {
+            throw new RuntimeException("Approval Request does not exist!");
+        }
+        return "Teacher Approved!!!";
+    }
+
+    @Override
+    public String rejectTeacher(Integer id) {
+        Optional<TeacherApprovalProcess> teacherApprovalProcess=teacherApprovalProcessRepo.findById(id);
+        if(teacherApprovalProcess.isPresent()){
+            TeacherApprovalProcess teacherApprove=teacherApprovalProcess.get();
+            teacherApprove.setStatus(Status.REJECTED);
+            teacherApprovalProcessRepo.save(teacherApprove);
+        }else {
+            throw new RuntimeException("Approval Request does not exist!");
+        }
+        return "Teacher Rejected!!!";
     }
 }
