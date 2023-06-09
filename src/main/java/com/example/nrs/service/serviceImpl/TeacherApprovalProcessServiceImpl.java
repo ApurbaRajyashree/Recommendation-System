@@ -1,5 +1,6 @@
 package com.example.nrs.service.serviceImpl;
 
+import com.example.nrs.component.FileStoreUtils;
 import com.example.nrs.dto.TeacherApprovalProcessDto;
 import com.example.nrs.entity.Role;
 import com.example.nrs.entity.Status;
@@ -8,8 +9,10 @@ import com.example.nrs.entity.User;
 import com.example.nrs.repository.TeacherApprovalProcessRepo;
 import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.TeacherApprovalProcessService;
+import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,19 +22,27 @@ import java.util.stream.Collectors;
 public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcessService {
 
     private final TeacherApprovalProcessRepo teacherApprovalProcessRepo;
+    private final FileStoreUtils fileStoreUtils;
+
 
     private final UserRepo userRepo;
 
-    public TeacherApprovalProcessServiceImpl(TeacherApprovalProcessRepo teacherApprovalProcessRepo, UserRepo userRepo) {
+    public TeacherApprovalProcessServiceImpl(TeacherApprovalProcessRepo teacherApprovalProcessRepo, FileStoreUtils fileStoreUtils, UserRepo userRepo) {
         this.teacherApprovalProcessRepo = teacherApprovalProcessRepo;
+        this.fileStoreUtils = fileStoreUtils;
         this.userRepo = userRepo;
     }
 
     @Override
-    public String createApprovalRequest(TeacherApprovalProcessDto teacherApprovalProcessDto) {
+    public String createApprovalRequest(TeacherApprovalProcessDto teacherApprovalProcessDto) throws TikaException, IOException {
+
+        if(teacherApprovalProcessDto.getTeacherExperience()==null || teacherApprovalProcessDto.getEducationQualification()==null){
+            throw new RuntimeException("Experience and Qualification should be selected");
+        }
        TeacherApprovalProcess teacherApprovalProcess=new TeacherApprovalProcess(teacherApprovalProcessDto);
        teacherApprovalProcess.setDate(new Date());
        teacherApprovalProcess.setStatus(Status.SUBMITTED);
+       teacherApprovalProcess.setFilePath(fileStoreUtils.saveMultipartFile(teacherApprovalProcessDto.getMultipartFile()));
        teacherApprovalProcessRepo.save(teacherApprovalProcess);
        return "Approval Request Sent Successfully \n Wait for a response from our administration";
     }

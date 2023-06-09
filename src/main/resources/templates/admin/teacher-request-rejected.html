@@ -84,6 +84,7 @@
               <th>Teaching Experience</th>
               <th>Educational Qualification</th>
               <th>University/College</th>
+              <th>Resume</th>
               <th>Detail</th>
             </tr>
             </thead>
@@ -94,6 +95,7 @@
               <td th:text="${teach.teacherExperience}"></td>
               <td th:text="${teach.educationQualification}"></td>
               <td th:text="${teach.universityOrCollegeName}"></td>
+              <td><a th:href="@{'/download/teacher-resume/'+${teach.id}}" th:text="${teach.filePath}"></a></td>
               <td th:text="${teach.detail}"></td>
 
             </tr>

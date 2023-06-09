@@ -118,6 +118,7 @@
                         <tr>
 
                             <th>S.N.</th>
+                            <th>Author</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>File</th>
@@ -129,6 +130,7 @@
                         <tbody th:each="note,Index:${submittedRequest}">
                         <tr>
                             <td th:text="${Index.count}"></td>
+                            <td th:text="${note.getUser().getUserFullName()}"></td>
                             <td th:text="${note.getNoteTitle()}"></td>
                             <td th:text="${note.getNoteDescription()}"></td>
                             <td><a th:href="@{'/download/'+${note.id}}" th:text="${note.filePath}"></a></td>

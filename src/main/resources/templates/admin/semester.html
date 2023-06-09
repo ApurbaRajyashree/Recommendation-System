@@ -112,7 +112,7 @@
                         <label for="semesterName" class=""> Semester</label>
                         <select class="form-select mt-2" aria-label="Default select example" id="semesterName"
                                 th:field="*{semesterNames}"  multiple required="">
-                            <option value="" disabled>-- select --</option>
+                            <option value="0">select option</option>
                             <option th:each="semesterOpt : ${T(com.example.nrs.entity.SemesterName).values()}"
                                     th:value="${semesterOpt}" th:text="${semesterOpt}">>
                             </option>

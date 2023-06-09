@@ -75,10 +75,10 @@
             <h6>Fill out the form to sent a request to our administration to be provided Teacher role and be able to upload your notes.</h6>
           </div>
           <div class="mb-4">
-            <label for="Experience" class=""> Teaching Experience</label>
+            <label for="Experience" class=""> Teaching Experience*</label>
             <select class="form-select mt-2" aria-label="Default select example" id="Experience"
                     th:field="*{teacherExperience}" required>
-              <option value="" disabled>-- select --</option>
+              <option value="0">select option</option>
               <option th:each="experienceOpt : ${T(com.example.nrs.entity.TeacherExperience).values()}"
                       th:value="${experienceOpt}" th:text="${experienceOpt}">>
               </option>
@@ -86,10 +86,10 @@
           </div>
 
           <div class="mb-4">
-            <label for="course" class=""> Educational Qualifications</label>
+            <label for="course" class=""> Educational Qualifications*</label>
             <select class="form-select mt-2" aria-label="Default select example" id="course"
                     th:field="*{educationQualification}" required>
-              <option value="" disabled>-- select --</option>
+              <option value="0">select option</option>
               <option th:each="qualificationOpt : ${T(com.example.nrs.entity.EducationQualification).values()}"
                       th:value="${qualificationOpt}" th:text="${qualificationOpt}">>
               </option>
@@ -97,13 +97,21 @@
           </div>
           <div class="mb-4 mt-4">
 
-            <label for="course" class=""> University/College Name</label>
+            <label for="course" class=""> University/College Name*</label>
               <input type="text" class="form-control" id="floatingInput" th:field="*{universityOrCollegeName}" required >
 
           </div>
           <div class="mb-4">
             <label for="course" class=""> Desciption</label>
               <textarea class="form-control" id="floatingTextarea2" style="height: 180px"  th:field="*{detail}" ></textarea>
+          </div>
+          <div class="mb-4">
+            <div class="input-group">
+              <label for="Experience" class=""> Teaching Experience*</label>
+              <input type="file" class="form-control" id="inputGroupFile04"
+                     th:field="*{multipartFile}"
+                     aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+            </div>
           </div>
 
           <button class="btn btn-dark upload_btn mt-4 me-3" type="submit">Reset</button>

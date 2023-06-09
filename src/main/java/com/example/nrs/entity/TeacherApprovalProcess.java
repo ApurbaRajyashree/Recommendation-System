@@ -50,6 +50,13 @@ public class TeacherApprovalProcess {
     @Column(name = "status")
     private Status status;
 
+    @Column(name = "file_path")
+    private String filePath;
+
+    @Column(name = "file_name")
+    private String fileName;
+
+
     public TeacherApprovalProcess(TeacherApprovalProcessDto teacherApprovalProcessDto){
         this.id=teacherApprovalProcessDto.getId();
         this.user=teacherApprovalProcessDto.getUser();
@@ -60,5 +67,7 @@ public class TeacherApprovalProcess {
         this.remarks=teacherApprovalProcessDto.getRemarks();
         this.status=teacherApprovalProcessDto.getStatus();
         this.teacherExperience=teacherApprovalProcessDto.getTeacherExperience();
+        this.fileName=teacherApprovalProcessDto.getFileName();
+        this.filePath=teacherApprovalProcessDto.getFilePath();
     }
 }

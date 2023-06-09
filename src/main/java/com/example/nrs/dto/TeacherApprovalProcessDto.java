@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -33,6 +34,10 @@ public class TeacherApprovalProcessDto {
 
     private Status status;
 
+    private String filePath;
+    private MultipartFile multipartFile;
+    private String fileName;
+
     public TeacherApprovalProcessDto(TeacherApprovalProcess teacherApprovalProcess){
         this.id=teacherApprovalProcess.getId();
         this.user=teacherApprovalProcess.getUser();
@@ -43,7 +48,8 @@ public class TeacherApprovalProcessDto {
         this.remarks=teacherApprovalProcess.getRemarks();
         this.status=teacherApprovalProcess.getStatus();
         this.teacherExperience=teacherApprovalProcess.getTeacherExperience();
-
+        this.fileName= teacherApprovalProcess.getFileName();
+        this.filePath=teacherApprovalProcess.getFilePath();
     }
 }
 

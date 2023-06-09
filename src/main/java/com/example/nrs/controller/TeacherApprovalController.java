@@ -1,6 +1,6 @@
 package com.example.nrs.controller;
 
-import com.example.nrs.dto.NoteDto;
+import com.example.nrs.component.FileStoreUtils;
 import com.example.nrs.dto.TeacherApprovalProcessDto;
 import com.example.nrs.entity.Status;
 import com.example.nrs.repository.UserRepo;
@@ -18,16 +18,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class TeacherApprovalController {
 
     private final TeacherApprovalProcessService teacherApprovalProcessService;
+    private final FileStoreUtils fileStoreUtils;
+
     private final UserRepo userRepo;
 
-    public TeacherApprovalController(TeacherApprovalProcessService teacherApprovalProcessService, UserRepo userRepo) {
+    public TeacherApprovalController(TeacherApprovalProcessService teacherApprovalProcessService, FileStoreUtils fileStoreUtils, UserRepo userRepo) {
         this.teacherApprovalProcessService = teacherApprovalProcessService;
+        this.fileStoreUtils = fileStoreUtils;
         this.userRepo = userRepo;
     }
 
@@ -40,18 +42,21 @@ public class TeacherApprovalController {
     }
 
     @PostMapping("/user/teacher-approval-request/post")
-    public String createNote(@Valid @ModelAttribute("teacher-approval-request") TeacherApprovalProcessDto teacherApprovalProcessDto,
+    public String createTeacherRequest(@Valid @ModelAttribute("teacher-approval-request") TeacherApprovalProcessDto teacherApprovalProcessDto,
                              BindingResult result, Principal principal,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes) throws IOException {
 
+        String type = fileStoreUtils.extensionvalidation(teacherApprovalProcessDto.getMultipartFile());
         String success_message = "";
-        teacherApprovalProcessDto.setUser(userRepo.findByUserEmail(principal.getName()));
-        try {
-            success_message = teacherApprovalProcessService.createApprovalRequest(teacherApprovalProcessDto);
+        if (type.equals("application/pdf")) {
+            teacherApprovalProcessDto.setUser(userRepo.findByUserEmail(principal.getName()));
+            try {
+                success_message = teacherApprovalProcessService.createApprovalRequest(teacherApprovalProcessDto);
 
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/user/teacher-approval-request";
+            } catch (RuntimeException | TikaException | IOException e) {
+                redirectAttributes.addFlashAttribute("message", e.getMessage());
+                return "redirect:/user/teacher-approval-request";
+            }
         }
         redirectAttributes.addFlashAttribute("success_message", success_message);
         return "redirect:/user/teacher-approval-request";
