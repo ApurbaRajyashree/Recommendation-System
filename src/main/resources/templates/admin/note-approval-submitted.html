@@ -29,7 +29,7 @@
 
             <ul class="list-group mt-5">
                 <li class="list-group-item  ">
-                    <a  th:href="@{/admin/note-approval-submitted}" class="text-decoration-none text-dark">
+                    <a th:href="@{/admin/note-approval-submitted}" class="text-decoration-none text-dark">
                         <i class="far fa-list-alt icons mx-2 fs-4"></i>
                         Note Approval
                     </a>
@@ -70,12 +70,12 @@
         <div class="col-md-10 border mx-auto">
             <div class="role_table  mt-5">
                 <div class="MPOS">
-                    Teacher Approval
+                    Note Approval
                 </div>
                 <div>
-                    <span style="color: #7EADDB; font-size: 20px"><a th:href="@{/admin/teacher-approval-submitted}">Submitted</a></span>
-                    | <span style="font-size: 20px"><a th:href="@{/admin/teacher-approved}">Approved</a></span> | <span
-                        style="font-size: 20px"><a th:href="@{/admin/teacher-rejected}">Rejected</a></span>
+                    <span style="color: #7EADDB; font-size: 20px"><a th:href="@{/admin/note-approval-submitted}">Submitted</a></span>
+                    | <span style="font-size: 20px"><a th:href="@{/admin/note-approved}">Approved</a></span> | <span
+                        style="font-size: 20px"><a th:href="@{/admin/note-rejected}">Rejected</a></span>
                 </div>
                 <div th:if="${param.success}" class="my-3">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -116,29 +116,30 @@
                     <table class="table table-bordered table-striped mt-3">
                         <thead>
                         <tr>
+
                             <th>S.N.</th>
-                            <th>Full Name</th>
-                            <th>Teaching Experience</th>
-                            <th>Educational Qualification</th>
-                            <th>University/College</th>
-                            <th>Detail</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>File</th>
+                            <th>Date-Time</th>
+                            <th>Course</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody th:each="teach,Index:${submittedRequest}">
+                        <tbody th:each="note,Index:${submittedRequest}">
                         <tr>
                             <td th:text="${Index.count}"></td>
-                            <td th:text="${teach.getUser().userFullName}"></td>
-                            <td th:text="${teach.teacherExperience}"></td>
-                            <td th:text="${teach.educationQualification}"></td>
-                            <td th:text="${teach.universityOrCollegeName}"></td>
-                            <td th:text="${teach.detail}"></td>
+                            <td th:text="${note.getNoteTitle()}"></td>
+                            <td th:text="${note.getNoteDescription()}"></td>
+                            <td><a th:href="@{'/download/'+${note.id}}" th:text="${note.filePath}"></a></td>
+                            <td th:text="${note.getDateOfNoteCreation()}"></td>
+                            <td th:text="${note.getCourse().courseName}"></td>
 
                             <td>
                                 <a class="btn btn-primary"
-                                   th:href="@{'/admin/teacher-approve/'+${teach.id}}">Approve</a>
+                                   th:href="@{'/admin/note-approve/'+${note.id}}">Approve</a>
 
-                                <a th:href="@{'/admin/teacher-reject/'+${teach.id}}"
+                                <a th:href="@{'/admin/note-reject/'+${note.id}}"
                                    class="btn btn-danger">Reject</a>
 
                             </td>

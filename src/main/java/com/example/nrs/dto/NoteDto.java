@@ -27,6 +27,8 @@ public class NoteDto {
     private Course course;
     private User user;
 
+    private String fileName;
+
     public NoteDto(Note note){
         this.id=note.getId();
         this.filePath=note.getFilePath();
@@ -35,8 +37,8 @@ public class NoteDto {
         this.noteStatus=note.getNoteStatus();
         this.course=note.getCourse();
         this.user=note.getUser();
-        this.isActive=note.getIsActive();
         this.dateOfNoteCreation=note.getDateOfNoteCreation();
+        this.fileName=note.getFileName();
     }
 
     public NoteDto(Integer id){

@@ -18,4 +18,7 @@ public interface NoteService {
 
     List<NoteDto> getAllNotesByStatus(Status status);
 
+    String acceptNote(Integer id);
+    String rejectNote(Integer id);
+
 }

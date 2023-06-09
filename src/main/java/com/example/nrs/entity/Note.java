@@ -19,7 +19,6 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "note")
-@Where(clause = "is_active=true")
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +41,9 @@ public class Note {
     @Column(name = "status")
     private Status noteStatus;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "file_name")
+    private String fileName;
+
 
 
 
@@ -65,8 +65,8 @@ public class Note {
         this.noteStatus=noteDto.getNoteStatus();
         this.course=noteDto.getCourse();
         this.user=noteDto.getUser();
-        this.isActive=noteDto.getIsActive();
         this.dateOfNoteCreation=noteDto.getDateOfNoteCreation();
+        this.fileName=noteDto.getFileName();
     }
 
 

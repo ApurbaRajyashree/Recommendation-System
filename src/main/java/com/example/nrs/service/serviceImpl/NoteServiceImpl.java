@@ -11,10 +11,12 @@ import com.example.nrs.service.NoteService;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +38,7 @@ public class NoteServiceImpl implements NoteService {
         if(noteDto.getCourse()==null){
             throw new RuntimeException("Course must be selected");
         }
+
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/YYYY -- E H:m a");
         String myDate = localDateTime.format(df);
@@ -50,7 +53,6 @@ public class NoteServiceImpl implements NoteService {
                         .dateOfNoteCreation(myDate)
                         .filePath(fileStoreUtils.saveMultipartFile(noteDto.getMultipartFile()))
                         .user(noteDto.getUser())
-                        .isActive(true)
                         .noteStatus(Status.SUBMITTED)
                         .build();
         note = noteRepo.save(note);
@@ -80,5 +82,31 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteDto> getAllNotesByStatus(Status status) {
         List<Note> notes=noteRepo.findAllByNoteStatus(status);
         return notes.stream().map(x-> new NoteDto(x)).collect(Collectors.toList());
+    }
+
+    @Override
+    public String acceptNote(Integer id) {
+        Optional<Note> note=noteRepo.findById(id);
+        if(note.isPresent()){
+            Note note1=note.get();
+            note1.setNoteStatus(Status.APPROVED);
+            noteRepo.save(note1);
+        }else {
+            throw new RuntimeException("Note doesnot exist");
+        }
+        return "Note Accepted!!";
+    }
+
+    @Override
+    public String rejectNote(Integer id) {
+        Optional<Note> note=noteRepo.findById(id);
+        if(note.isPresent()){
+            Note note1=note.get();
+            note1.setNoteStatus(Status.REJECTED);
+            noteRepo.save(note1);
+        }else {
+            throw new RuntimeException("Note doesnot exist");
+        }
+        return "Note Rejected!!";
     }
 }
