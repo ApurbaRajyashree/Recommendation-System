@@ -4,6 +4,7 @@ import com.example.nrs.entity.Department;
 import com.example.nrs.entity.Note;
 import com.example.nrs.entity.Role;
 import com.example.nrs.entity.User;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,10 @@ import java.util.List;
 public class UserDto {
     private Integer id;
     private String userFullName;
+
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+            message = "Invalid email")
     private String userEmail;
     private String userMobileNumber;
     private String userPassword;
