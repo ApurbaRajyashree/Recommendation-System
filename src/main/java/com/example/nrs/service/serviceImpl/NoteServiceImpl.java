@@ -1,22 +1,24 @@
 package com.example.nrs.service.serviceImpl;
 
+import com.example.nrs.algorithm.SlopeOneAlgorithm;
 import com.example.nrs.component.FileStoreUtils;
 import com.example.nrs.dto.NoteDto;
+import com.example.nrs.dto.RatingDto;
 import com.example.nrs.entity.Note;
 import com.example.nrs.entity.Status;
 import com.example.nrs.entity.User;
 import com.example.nrs.repository.NoteRepo;
+import com.example.nrs.repository.RatingRepo;
 import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.NoteService;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +29,13 @@ public class NoteServiceImpl implements NoteService {
 
     private final FileStoreUtils fileStoreUtils;
 
-    public NoteServiceImpl(NoteRepo noteRepo, UserRepo userRepo, FileStoreUtils fileStoreUtils) {
+    private final RatingRepo ratingRepo;
+
+    public NoteServiceImpl(NoteRepo noteRepo, UserRepo userRepo, FileStoreUtils fileStoreUtils, RatingRepo ratingRepo) {
         this.noteRepo = noteRepo;
         this.userRepo = userRepo;
         this.fileStoreUtils = fileStoreUtils;
+        this.ratingRepo = ratingRepo;
     }
 
     @Override
@@ -121,4 +126,22 @@ public class NoteServiceImpl implements NoteService {
         noteRepo.deleteById(id);
         return "Deleted successfully";
     }
+
+
+    @Override
+    public List<NoteDto> recommendNoteForUser(Principal principal, int numRecommendation) {
+        User loggedInUser=userRepo.findByUserEmail(principal.getName());
+
+        SlopeOneAlgorithm collaborativeFiltering=new SlopeOneAlgorithm(userRepo,noteRepo,ratingRepo);
+        List<Integer> noteId=collaborativeFiltering.recommendNotes(loggedInUser.getId(),numRecommendation);
+        List<Note> notes=new ArrayList<>();
+        for (Integer eachNoteId:noteId
+        ) {
+            Note retrivedNotes=noteRepo.findById(eachNoteId).get();
+            notes.add(retrivedNotes);
+        }
+
+        return notes.stream().map(x->new NoteDto(x)).collect(Collectors.toList());
+    }
+
 }

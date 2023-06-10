@@ -6,7 +6,9 @@ import com.example.nrs.entity.User;
 import org.apache.tika.exception.TikaException;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 public interface NoteService {
     NoteDto createNote(NoteDto noteDto) throws TikaException, IOException;
@@ -26,4 +28,8 @@ public interface NoteService {
 
     String deleteNote(Integer id);
 
-}
+
+    public List<NoteDto> recommendNoteForUser(Principal principal, int numRecommendation);
+
+
+    }

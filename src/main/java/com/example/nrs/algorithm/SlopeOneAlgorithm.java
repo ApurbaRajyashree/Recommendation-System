@@ -16,13 +16,12 @@ public class SlopeOneAlgorithm {
     private final UserRepo userRepo;
     private final NoteRepo noteRepo;
     private final RatingRepo ratingRepo;
-    private final Rating rating;
+    private  Rating rating;
 
-    public SlopeOneAlgorithm(UserRepo userRepo, NoteRepo noteRepo, RatingRepo ratingRepo, Rating rating) {
+    public SlopeOneAlgorithm(UserRepo userRepo, NoteRepo noteRepo, RatingRepo ratingRepo) {
         this.userRepo = userRepo;
         this.noteRepo = noteRepo;
         this.ratingRepo = ratingRepo;
-        this.rating = rating;
         userRatings = new HashMap<>();
     }
 
@@ -76,7 +75,7 @@ public class SlopeOneAlgorithm {
     }
 
     //Recommend top-k notes for the given user
-    public List<Integer> recommendMovies(Integer targetUser, int numRecommendation) {
+    public List<Integer> recommendNotes(Integer targetUser, int numRecommendation) {
         addUserRating();
         if (!userRatings.containsKey(targetUser)) {
             System.out.println("User " + targetUser + " not found");
