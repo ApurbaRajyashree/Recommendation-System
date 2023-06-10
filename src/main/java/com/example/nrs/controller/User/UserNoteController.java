@@ -1,7 +1,9 @@
 package com.example.nrs.controller.User;
 
 import com.example.nrs.component.FileStoreUtils;
+import com.example.nrs.dto.DepartmentDto;
 import com.example.nrs.dto.NoteDto;
+import com.example.nrs.dto.RatingDto;
 import com.example.nrs.entity.Status;
 import com.example.nrs.entity.TeacherApprovalProcess;
 import com.example.nrs.entity.User;
@@ -15,10 +17,7 @@ import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -105,5 +104,23 @@ public class UserNoteController {
         List<NoteDto> noteDtos = noteService.getAllNotesByStatus(Status.APPROVED);
         model.addAttribute("notes", noteDtos);
         return "user/all-notes";
+    }
+
+
+    @RequestMapping(value = "/user/note/{noteId}/delete", method = RequestMethod.GET)
+    public String deleteNote(@ModelAttribute("note") NoteDto noteDto,
+                                @PathVariable("noteId") Integer id, RedirectAttributes redirectAttributes) {
+
+        String success_message = "";
+
+        try {
+            success_message= noteService.deleteNote(id);
+
+        }catch (RuntimeException e){
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        redirectAttributes.addFlashAttribute("success_message", success_message);
+
+        return "redirect:/user/note";
     }
 }

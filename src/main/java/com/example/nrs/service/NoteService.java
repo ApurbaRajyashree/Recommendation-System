@@ -24,4 +24,6 @@ public interface NoteService {
     String acceptNote(Integer id);
     String rejectNote(Integer id);
 
+    String deleteNote(Integer id);
+
 }

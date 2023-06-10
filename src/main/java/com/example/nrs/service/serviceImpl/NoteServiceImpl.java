@@ -115,4 +115,10 @@ public class NoteServiceImpl implements NoteService {
         }
         return "Note Rejected!!";
     }
+
+    @Override
+    public String deleteNote(Integer id) {
+        noteRepo.deleteById(id);
+        return "Deleted successfully";
+    }
 }
