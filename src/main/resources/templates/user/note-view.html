@@ -23,6 +23,21 @@
                     <span th:text="${note.getNoteTitle()}"></span>
                     <br><br><br>
                 </div>
+                <div th:unless="${ratingCheck.isRated()}">
+                    <form class="u-form-rating" th:action="@{'/user/note-view/'+${note.id}+'/rate'}"
+                          method="post" th:object="${rating}"
+                    >
+                        <div>
+                            <label for="rating">Rating (between 1 and 5):</label>
+                            <input type="number" id="rating" name="rating" th:field="*{stars}"  min="1" max="5">
+                            <button class="btn  btn-primary " type="submit">Rate</button>
+
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${ratingCheck.isRated()}">
+                  <span>Your Rating: </span> <span th:text="${ratingCheck.getStars()}"><br><br></span>
+                </div>
                 <div class="table-responsive">
                     <table>
                         <!--            <thead>-->
@@ -39,34 +54,37 @@
                         <!--            </tr>-->
                         <!--            </thead>-->
                         <tr>
-                            <td><span>Author: </span><span th:text="${note.getUser().getUserFullName()}"></span><br><br></td>
+                            <td><span>Author: </span><span th:text="${note.getUser().getUserFullName()}"></span>
+                            </td>
                         </tr>
 
                         <tr>
-                            <td><span>Upload Date: </span><span th:text="${note.getDateOfNoteCreation()}"></span><br><br></td>
+                            <td><span>Upload Date: </span><span
+                                    th:text="${note.getDateOfNoteCreation()}"></span></td>
                         </tr>
 
                         <tr>
                             <td><span>Department: </span><span
-                                    th:text="${note.getCourse().getSemester().getDepartment().getDepartmentName()}"><br><br></span>
+                                    th:text="${note.getCourse().getSemester().getDepartment().getDepartmentName()}"></span>
                             </td>
                         </tr>
 
                         <tr>
                             <td><span>Semester: </span><span
-                                    th:text="${note.getCourse().getSemester().getSemesterName()}"></span><br><br></td>
+                                    th:text="${note.getCourse().getSemester().getSemesterName()}"></span></td>
                         </tr>
                         <tr>
-                            <td><span>Course: </span><span th:text="${note.getCourse().courseName}"></span><br><br></td>
+                            <td><span>Course: </span><span th:text="${note.getCourse().courseName}"></span></td>
                         </tr>
                         <tr>
+                            <td>
                             <span>Description: </span>
-                            <span th:text="${note.getNoteDescription()}"><br><br></span>
+                                <span th:text="${note.getNoteDescription()}"></span><br><br></td>
                         </tr>
 
                         <tr>
                             <td>
-                                <a th:href="@{'/download/'+${note.id}}" >Click Here</a>
+                                <a th:href="@{'/download/'+${note.id}}">Click Here</a>
                                 <span>to download the pdf file of the note and continue reading</span>
                             </td>
                         </tr>
