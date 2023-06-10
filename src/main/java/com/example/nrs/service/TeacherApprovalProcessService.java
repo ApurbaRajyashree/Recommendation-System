@@ -3,6 +3,7 @@ package com.example.nrs.service;
 import com.example.nrs.dto.TeacherApprovalProcessDto;
 import com.example.nrs.entity.Status;
 import com.example.nrs.entity.TeacherApprovalProcess;
+import com.example.nrs.entity.User;
 import org.apache.tika.exception.TikaException;
 
 import java.io.IOException;
@@ -21,4 +22,8 @@ public interface TeacherApprovalProcessService {
     public String approveTeacher(Integer id);
 
     public String rejectTeacher(Integer id);
+
+    List<TeacherApprovalProcess> findAllByUserAndStatus(User user, Status status);
+
+
 }

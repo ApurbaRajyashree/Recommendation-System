@@ -70,4 +70,12 @@ public class TeacherApprovalProcess {
         this.fileName=teacherApprovalProcessDto.getFileName();
         this.filePath=teacherApprovalProcessDto.getFilePath();
     }
+
+    public  boolean isSubmitted(){
+        if(this.status.equals(Status.APPROVED)){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

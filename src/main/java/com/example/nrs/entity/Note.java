@@ -44,9 +44,6 @@ public class Note {
     @Column(name = "file_name")
     private String fileName;
 
-
-
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @JsonBackReference(value = "course")

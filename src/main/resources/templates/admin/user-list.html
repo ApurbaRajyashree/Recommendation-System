@@ -27,6 +27,7 @@
                 </div>
             </div>
 
+
             <ul class="list-group mt-5">
                 <li class="list-group-item  ">
                     <a  th:href="@{/admin/note-approval-submitted}" class="text-decoration-none text-dark">
@@ -34,28 +35,25 @@
                         Note Approval
                     </a>
                 </li>
+
                 <a th:href="@{/admin/teacher-approval-submitted}">
                     <li class="list-group-item ">
                         <i class="fas fa-vote-yea icons mx-2 fs-4"></i>
                         Teacher Approval
                     </li>
                 </a>
+
                 <li class="list-group-item ">
                     <i class="fas fa-user-shield icons mx-2 fs-4"></i>
                     <span class="dropdown" style="width: 100%;">
-                                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                      aria-expanded="false">
+                                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Master Data Setup
                                 </span>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="@{/admin/department}"
-                                           class="dropdown-item">Department Setup</a></li>
-                                    <li><a th:href="@{/admin/semester}" class="dropdown-item"
-                                           href="#">Semester Setup</a></li>
-                                    <li><a th:href="@{/admin/course}" class="dropdown-item"
-                                           href="#">Course Setup</a></li>
-                                                                        <li><a th:href="@{/admin/user-list}" class="dropdown-item" href="#">User List</a></li>
-
+                                    <li><a th:href="@{/admin/department}" class="dropdown-item" >Department Setup</a ></li>
+                                    <li><a th:href="@{/admin/semester}" class="dropdown-item" href="#">Semester Setup</a></li>
+                                    <li><a th:href="@{/admin/course}" class="dropdown-item" href="#">Course Setup</a></li>
+                                    <li><a th:href="@{/admin/user-list}" class="dropdown-item" href="#">User List</a></li>
                                 </ul>
                             </span>
                 </li>
@@ -71,38 +69,29 @@
         </div>
         <div class="col-md-10 border mx-auto">
             <div class="role_table  mt-5">
-                <div class="MPOS">
-                    Teacher Approval
-                </div>
-                <div><span style=" font-size: 20px"><a
-                        th:href="@{/admin/teacher-approval-submitted}">Submitted</a></span> | <span
-                        style="color: #7EADDB;font-size: 20px"><a
-                        th:href="@{/admin/teacher-approved}">Approved</a></span> | <span style="font-size: 20px"><a
-                        th:href="@{/admin/teacher-rejected}">Rejected</a></span>
+                <div class="MPOS">User Table
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped mt-3">
+                    <table class="table table-bordered table-striped mt-3" >
                         <thead>
                         <tr>
+
                             <th>S.N.</th>
                             <th>Full Name</th>
-                            <th>Teaching Experience</th>
-                            <th>Educational Qualification</th>
-                            <th>University/College</th>
-                            <th>Resume</th>
-                            <th>Detail</th>
+                            <th>College Name</th>
+                            <th>College Address</th>
+                            <th>Email</th>
+                            <th>Role</th>
                         </tr>
                         </thead>
-                        <tbody th:each="teach,Index:${submittedRequest}">
-                        <tr>
+                        <tbody th:each="user,Index:${users}">
+                        <tr >
                             <td th:text="${Index.count}"></td>
-                            <td th:text="${teach.getUser().userFullName}"></td>
-                            <td th:text="${teach.teacherExperience}"></td>
-                            <td th:text="${teach.educationQualification}"></td>
-                            <td th:text="${teach.universityOrCollegeName}"></td>
-                            <td><a th:href="@{'/download/teacher-resume/'+${teach.id}}" th:text="${teach.filePath}"></a></td>
-
-                            <td th:text="${teach.detail}"></td>
+                            <td th:text="${user.userFullName}"></td>
+                            <td th:text="${user.getCollegeName()}"></td>
+                            <td th:text="${user.getCollegeAddress()}"></td>
+                            <td th:text="${user.getUserEmail()}"></td>
+                            <td th:text="${user.role}"></td>
 
                         </tr>
 

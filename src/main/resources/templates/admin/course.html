@@ -30,7 +30,7 @@
 
             <ul class="list-group mt-5">
                 <li class="list-group-item  ">
-                    <a  th:href="@{/admin/note-approval-submitted}" class="text-decoration-none text-dark">
+                    <a th:href="@{/admin/note-approval-submitted}" class="text-decoration-none text-dark">
                         <i class="far fa-list-alt icons mx-2 fs-4"></i>
                         Note Approval
                     </a>
@@ -46,17 +46,23 @@
                 <li class="list-group-item ">
                     <i class="fas fa-user-shield icons mx-2 fs-4"></i>
                     <span class="dropdown" style="width: 100%;">
-                                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                      aria-expanded="false">
                                     Master Data Setup
                                 </span>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="@{/admin/department}" class="dropdown-item" >Department Setup</a ></li>
+                                    <li><a th:href="@{/admin/department}"
+                                           class="dropdown-item">Department Setup</a></li>
                                     <li><a th:href="@{/admin/semester}" class="dropdown-item">Semester Setup</a></li>
                                     <li><a th:href="@{/admin/course}" class="dropdown-item">Course Setup</a></li>
+                                                                        <li><a th:href="@{/admin/user-list}"
+                                                                               class="dropdown-item"
+                                                                               href="#">User List</a></li>
+
                                 </ul>
                             </span>
                 </li>
-                <a  th:href="@{/logout}">
+                <a th:href="@{/logout}">
                     <li class="list-group-item ">
                         <i class="fas fa-sign-out-alt icons mx-2 fs-4"></i>
                         Log out
@@ -111,7 +117,8 @@
                     <div class="mb-4 mt-4">
                         <label for="floatingInput">Course Name</label>
                         <div class="form-floating ">
-                            <input type="text" class="form-control" id="floatingInput" th:field="*{courseName}" required>
+                            <input type="text" class="form-control" id="floatingInput" th:field="*{courseName}"
+                                   required>
                             <p th:errors="*{courseName}" class="text-danger"
                                th:if="${#fields.hasErrors('courseName')}"></p>
                         </div>
@@ -119,7 +126,8 @@
                     <div class="mb-4">
                         <label for="department" class=""> Description </label>
                         <div class="form-floating">
-                            <textarea class="form-control" id="floatingTextarea2" style="height: 180px"  th:field="*{courseDescription}"></textarea>
+                            <textarea class="form-control" id="floatingTextarea2" style="height: 180px"
+                                      th:field="*{courseDescription}"></textarea>
                             <p th:errors="*{courseDescription}" class="text-danger"
                                th:if="${#fields.hasErrors('courseDescription')}"></p>
                         </div>
@@ -146,7 +154,7 @@
                 <div class="MPOS">Course Table
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped mt-3" >
+                    <table class="table table-bordered table-striped mt-3">
                         <thead>
                         <tr>
 
@@ -159,7 +167,7 @@
                         </tr>
                         </thead>
                         <tbody th:each="course,Index:${courses}">
-                        <tr >
+                        <tr>
                             <td th:text="${Index.count}"></td>
                             <td th:text="${course.getCourseName()}"></td>
                             <td th:text="${course.getCourseDescription()}"></td>

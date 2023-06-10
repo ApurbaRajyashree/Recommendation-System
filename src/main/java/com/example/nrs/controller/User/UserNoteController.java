@@ -1,10 +1,12 @@
 package com.example.nrs.controller.User;
 
 import com.example.nrs.component.FileStoreUtils;
-import com.example.nrs.dto.CourseDto;
 import com.example.nrs.dto.NoteDto;
 import com.example.nrs.entity.Status;
+import com.example.nrs.entity.TeacherApprovalProcess;
+import com.example.nrs.entity.User;
 import com.example.nrs.repository.NoteRepo;
+import com.example.nrs.repository.TeacherApprovalProcessRepo;
 import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.CourseService;
 import com.example.nrs.service.NoteService;
@@ -34,22 +36,26 @@ public class UserNoteController {
     private final CourseService courseService;
 
     private final NoteRepo noteRepo;
+    private final TeacherApprovalProcessRepo teacherApprovalProcessRepo;
 
-    public UserNoteController(FileStoreUtils fileStoreUtils, NoteService noteService, UserRepo userRepo, CourseService courseService, NoteRepo noteRepo) {
+    public UserNoteController(FileStoreUtils fileStoreUtils, NoteService noteService, UserRepo userRepo, CourseService courseService, NoteRepo noteRepo, TeacherApprovalProcessRepo teacherApprovalProcessRepo) {
         this.fileStoreUtils = fileStoreUtils;
         this.noteService = noteService;
         this.userRepo = userRepo;
         this.courseService = courseService;
         this.noteRepo = noteRepo;
+        this.teacherApprovalProcessRepo = teacherApprovalProcessRepo;
     }
 
     @GetMapping("/user/note")
     public String note(Model model, Principal principal) {
-        model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
+        User user=userRepo.findByUserEmail(principal.getName());
+        model.addAttribute("user",user);
         model.addAttribute("note", new NoteDto());
-        List<NoteDto> noteDtos = noteService.getAllNotesByUserEmail(principal.getName());
+        List<NoteDto> noteDtos = noteService.getAllNotesByUser(user);
         model.addAttribute("noteDtos", noteRepo.findAll());
         model.addAttribute("courses", courseService.getAllCourses());
+
         return "user/note";
     }
 

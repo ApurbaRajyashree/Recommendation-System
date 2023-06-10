@@ -2,6 +2,7 @@ package com.example.nrs.repository;
 
 import com.example.nrs.entity.Note;
 import com.example.nrs.entity.Status;
+import com.example.nrs.entity.User;
 import org.springframework.core.io.buffer.LimitedDataBufferList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,6 @@ public interface NoteRepo extends JpaRepository<Note,Integer> {
     List<Note> findAllByCourse_IdAndNoteStatus(Integer id, String noteStatus);
 
     List<Note> findAllByNoteStatus(Status status);
+
+    List<Note> findAllByUser(User user);
 }

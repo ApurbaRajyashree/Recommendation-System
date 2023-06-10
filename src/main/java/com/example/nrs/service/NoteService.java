@@ -2,6 +2,7 @@ package com.example.nrs.service;
 
 import com.example.nrs.dto.NoteDto;
 import com.example.nrs.entity.Status;
+import com.example.nrs.entity.User;
 import org.apache.tika.exception.TikaException;
 
 import java.io.IOException;
@@ -13,6 +14,8 @@ public interface NoteService {
     List<NoteDto> getAllNotes();
 
     List<NoteDto> getAllNotesByUserEmail(String email);
+    List<NoteDto> getAllNotesByUser(User user);
+
 
     List<NoteDto> getAllNotesByCourseIdAndStatus(Integer id, String status);
 

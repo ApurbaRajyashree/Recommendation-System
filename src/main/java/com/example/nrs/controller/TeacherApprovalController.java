@@ -3,6 +3,8 @@ package com.example.nrs.controller;
 import com.example.nrs.component.FileStoreUtils;
 import com.example.nrs.dto.TeacherApprovalProcessDto;
 import com.example.nrs.entity.Status;
+import com.example.nrs.entity.TeacherApprovalProcess;
+import com.example.nrs.entity.User;
 import com.example.nrs.repository.UserRepo;
 import com.example.nrs.service.TeacherApprovalProcessService;
 import jakarta.validation.Valid;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class TeacherApprovalController {
@@ -35,10 +38,21 @@ public class TeacherApprovalController {
 
 
     @GetMapping("/user/teacher-approval-request")
-    public String teacherApprovalRequest(Model model, Principal principal) {
-        model.addAttribute("user", userRepo.findByUserEmail(principal.getName()));
-        model.addAttribute("teacherApprovalRequest", new TeacherApprovalProcessDto());
+    public String teacherApprovalRequest(Model model, Principal principal,RedirectAttributes redirectAttributes) {
+        User user=userRepo.findByUserEmail(principal.getName());
+        model.addAttribute("user", user);
+        List<TeacherApprovalProcess> teacherApprovalProcessList=teacherApprovalProcessService.findAllByUserAndStatus(user,Status.SUBMITTED);
+        if(teacherApprovalProcessList.isEmpty()){
+            model.addAttribute("teacherApprovalRequest", new TeacherApprovalProcessDto());
+
+        }else
+        {
+            String message = "Failed! Your request is under review. Please wait for response from our administration";
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/user/note";
+        }
         return "user/teacher-approval-request";
+
     }
 
     @PostMapping("/user/teacher-approval-request/post")
@@ -59,7 +73,7 @@ public class TeacherApprovalController {
             }
         }
         redirectAttributes.addFlashAttribute("success_message", success_message);
-        return "redirect:/user/teacher-approval-request";
+        return "redirect:/user/note";
 
     }
 

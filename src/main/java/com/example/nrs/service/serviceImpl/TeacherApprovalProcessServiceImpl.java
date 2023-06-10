@@ -93,4 +93,10 @@ public class TeacherApprovalProcessServiceImpl implements TeacherApprovalProcess
         }
         return "Teacher Rejected!!!";
     }
+
+    @Override
+    public List<TeacherApprovalProcess> findAllByUserAndStatus(User user, Status status) {
+     List<TeacherApprovalProcess> teacherApprovalProcessList=teacherApprovalProcessRepo.findAllByUserAndStatus(user,status);
+     return teacherApprovalProcessList;
+    }
 }
