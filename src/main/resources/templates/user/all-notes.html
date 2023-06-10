@@ -29,10 +29,9 @@
                             <th>S.N.</th>
                             <th>Author</th>
                             <th>Title</th>
-                            <th>Description</th>
-                            <th>File</th>
                             <th>Date-Time</th>
                             <th>Course</th>
+                            <th>Department</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -41,16 +40,14 @@
                             <td th:text="${Index.count}"></td>
                             <td th:text="${note.getUser().getUserFullName()}"></td>
                             <td th:text="${note.getNoteTitle()}"></td>
-                            <td th:text="${note.getNoteDescription()}"></td>
-                            <td><a th:href="@{'/download/'+${note.id}}" th:text="${note.filePath}"></a></td>
                             <td th:text="${note.getDateOfNoteCreation()}"></td>
                             <td th:text="${note.getCourse().courseName}"></td>
+                            <td th:text="${note.getCourse().getSemester().getDepartment().getDepartmentName()}"></td>
 
                             <td>
-
-                                <!--                <a th:href="@{'/user/note/'+${note.id}+'/note'}">-->
-                                <!--                  <i class="fa-solid fa-trash" style="color: #f50025;"></i>-->
-                                <!--                </a>-->
+                                <a th:href="@{'/user/note-view/'+${note.id}}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
                             </td>
                         </tr>
 

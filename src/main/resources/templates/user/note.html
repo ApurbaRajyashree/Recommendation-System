@@ -187,8 +187,6 @@
 
                                 <th>S.N.</th>
                                 <th>Title</th>
-                                <th>File</th>
-                                <th>Description</th>
                                 <th>Date-Time</th>
                                 <th>Course</th>
                                 <th>Status</th>
@@ -199,17 +197,16 @@
                             <tr>
                                 <td th:text="${Index.count}"></td>
                                 <td th:text="${note.noteTitle}"></td>
-                                <!--                            <td><button style="all:unset" th:onclick="'seePdf('+ ${note.filePath}+')'">using double brackets</button></td>-->
-                                <td><a th:href="@{'/download/'+${note.id}}" th:text="${note.filePath}"></a></td>
-                                <td th:text="${note.noteDescription}"></td>
                                 <td th:text="${note.dateOfNoteCreation}"></td>
                                 <td th:text="${note.getCourse().courseName}"></td>
                                 <td th:text="${note.getNoteStatus()}"></td>
 
                                 <td>
-                                    <!--                                <a th:href="@{/post/view/} + ${post.id}">-->
-                                    <i class="fa-solid fa-eye"></i>
+
+                                    <a th:href="@{'/user/self-note-view/'+${note.id}}">
+                                        <i class="fa-solid fa-eye"></i>
                                     </a>
+
 
                                     <!--                                <a th:href="@{/post/delete/} + ${post.id}">-->
                                     <i class="fa-solid fa-trash" style="color: #f50025;"></i>
