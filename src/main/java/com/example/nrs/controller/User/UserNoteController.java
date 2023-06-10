@@ -53,7 +53,7 @@ public class UserNoteController {
         model.addAttribute("user",user);
         model.addAttribute("note", new NoteDto());
         List<NoteDto> noteDtos = noteService.getAllNotesByUser(user);
-        model.addAttribute("noteDtos", noteRepo.findAll());
+        model.addAttribute("noteDtos", noteDtos);
         model.addAttribute("courses", courseService.getAllCourses());
 
         return "user/note";
