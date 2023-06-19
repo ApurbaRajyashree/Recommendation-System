@@ -48,7 +48,7 @@ public class SlopeOneAlgorithm {
     }
 
 
-    //calculate similarity between two users using cosine similarity
+    //calculate similarity between two users
     private double calculateSimilarity(Integer user1, Integer user2) {
 
         Set<Integer> user1Notes = userRatings.get(user1).keySet();
