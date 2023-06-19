@@ -1,9 +1,8 @@
 package com.example.nrs.service.serviceImpl;
 
-import com.example.nrs.algorithm.SlopeOneAlgorithm;
+import com.example.nrs.algorithm.CosineSimilarity;
 import com.example.nrs.component.FileStoreUtils;
 import com.example.nrs.dto.NoteDto;
-import com.example.nrs.dto.RatingDto;
 import com.example.nrs.entity.Note;
 import com.example.nrs.entity.Status;
 import com.example.nrs.entity.User;
@@ -132,7 +131,7 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteDto> recommendNoteForUser(Principal principal, int numRecommendation) {
         User loggedInUser=userRepo.findByUserEmail(principal.getName());
 
-        SlopeOneAlgorithm collaborativeFiltering=new SlopeOneAlgorithm(userRepo,noteRepo,ratingRepo);
+        CosineSimilarity collaborativeFiltering=new CosineSimilarity(userRepo,noteRepo,ratingRepo);
         List<Integer> noteId=collaborativeFiltering.recommendNotes(loggedInUser.getId(),numRecommendation);
         List<Note> notes=new ArrayList<>();
         for (Integer eachNoteId:noteId

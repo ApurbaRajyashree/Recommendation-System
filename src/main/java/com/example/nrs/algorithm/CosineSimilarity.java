@@ -9,7 +9,7 @@ import com.example.nrs.repository.UserRepo;
 import java.util.*;
 
 
-public class SlopeOneAlgorithm {
+public class CosineSimilarity {
     //Data structure to store user-item ratings
     private Map<Integer, Map<Integer, Float>> userRatings = new HashMap<>();
 
@@ -18,7 +18,7 @@ public class SlopeOneAlgorithm {
     private final RatingRepo ratingRepo;
     private  Rating rating;
 
-    public SlopeOneAlgorithm(UserRepo userRepo, NoteRepo noteRepo, RatingRepo ratingRepo) {
+    public CosineSimilarity(UserRepo userRepo, NoteRepo noteRepo, RatingRepo ratingRepo) {
         this.userRepo = userRepo;
         this.noteRepo = noteRepo;
         this.ratingRepo = ratingRepo;
