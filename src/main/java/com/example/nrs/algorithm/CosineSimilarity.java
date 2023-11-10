@@ -42,7 +42,6 @@ public class CosineSimilarity {
                     localRatings.put(eachRating.getNote().getId(), eachRating.getStars());
                 }
                 userRatings.put(eachUserRating.getUser().getId(), localRatings);
-
             }
         }
     }
@@ -50,8 +49,7 @@ public class CosineSimilarity {
 
     //calculate similarity between two users
     private double calculateSimilarity(Integer user1, Integer user2) {
-
-        Set<Integer> user1Notes = userRatings.get(user1).keySet();
+        Set<Integer> user1Notes = userRatings.get(user1).keySet(); //noteId
         Set<Integer> user2Notes = userRatings.get(user2).keySet();
         float dotProdut = 0;
         double user1Norm = 0;
@@ -59,19 +57,18 @@ public class CosineSimilarity {
         for (Integer note : user1Notes
         ) {
             if (user2Notes.contains(note)) {
-                dotProdut = dotProdut + userRatings.get(user1).get(note) * userRatings.get(user2).get(note);
+                dotProdut = dotProdut + userRatings.get(user1).get(note) * userRatings.get(user2).get(note); //summation of A.B
             }
-            user1Norm = user1Norm + Math.pow(userRatings.get(user1).get(note), 2);
+            user1Norm = user1Norm + Math.pow(userRatings.get(user1).get(note), 2); //summation of A^2
 
         }
         for (Integer note : user2Notes) {
-            user2Norm = user2Norm + Math.pow(userRatings.get(user2).get(note), 2);
+            user2Norm = user2Norm + Math.pow(userRatings.get(user2).get(note), 2); //summation of B^2
         }
         if (user1Norm == 0 || user2Norm == 0) {
-            return 0.0;//return 0 if one of the user has no ratings
+            return 0.0; //return 0 if one of the user has no ratings
         }
-        return dotProdut / (Math.sqrt(user1Norm) * Math.sqrt(user2Norm));
-
+        return dotProdut / (Math.sqrt(user1Norm) * Math.sqrt(user2Norm)); // ( A.B ) / ( ||A||.||B|| )
     }
 
     //Recommend top-k notes for the given user
@@ -83,7 +80,7 @@ public class CosineSimilarity {
         }
 
         //Calculate similariity between the target user and other users
-        Map<Integer, Double> similarityMap = new HashMap<>();
+        Map<Integer, Double> similarityMap = new HashMap<>(); // otherUserId, similaritybetween
         for (Map.Entry<Integer, Map<Integer, Float>> entry : userRatings.entrySet()) {
             Integer userId = entry.getKey();
             if (!userId.equals(targetUser)) {
@@ -97,12 +94,12 @@ public class CosineSimilarity {
         sortedSimilarities.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         //Generate note recommendations based on similar users
-        Set<Integer> targetUserNotes = userRatings.get(targetUser).keySet();
+        Set<Integer> targetUserNotes = userRatings.get(targetUser).keySet(); //target user-> list of rated note id
         List<Integer> recommendations = new ArrayList<>();
 
         for (Map.Entry<Integer, Double> entry : sortedSimilarities) {
-            Integer similarUser = entry.getKey();
-            Map<Integer, Float> similarUserRatings = userRatings.get(similarUser);
+            Integer similarUser = entry.getKey(); //userId
+            Map<Integer, Float> similarUserRatings = userRatings.get(similarUser);  //user-> (noteId,rating)
 
             for (Integer note : similarUserRatings.keySet()
             ) {
