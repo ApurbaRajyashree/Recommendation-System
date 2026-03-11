@@ -17,9 +17,7 @@ The application helps users discover relevant notes that they haven't interacted
 3. **Cosine Similarity Calculation**
    - Similarity between two users \(A\) and \(B\) is calculated using:
 
-   \[
-   \text{Cosine Similarity}(A,B) = \frac{A \cdot B}{||A|| \, ||B||}
-   \]
+     Cosine Similarity(A,B)=∥A∥∥B∥A⋅B​
 
    - A higher score indicates that two users have similar note preferences.
 
